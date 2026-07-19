@@ -2,6 +2,7 @@ import { useReveal } from '../hooks/useReveal';
 import SceneCanvas from '../three/SceneCanvas';
 import AmbianceScene from '../three/AmbianceScene';
 import { usePrefersReducedMotion, useQualityTier } from '../hooks/useEnv';
+import { BROCHE } from '../img';
 
 export default function BrocheSection() {
   const head = useReveal();
@@ -18,7 +19,7 @@ export default function BrocheSection() {
         </div>
         <div className="story-grid">
           <div className="story-vis rev" ref={useReveal()}>
-            <div className="ph" style={{ backgroundImage: "url('/assets/broche.jpg')" }} />
+            <div className="ph" style={{ backgroundImage: `url(${BROCHE})` }} />
             <SceneCanvas className="r3f-layer" camera={{ position: [0, 0, 5], fov: 40 }} gl={{ alpha: true }}>
               <AmbianceScene quality={quality} reduce={reduce} pixelRatio={pr} />
             </SceneCanvas>

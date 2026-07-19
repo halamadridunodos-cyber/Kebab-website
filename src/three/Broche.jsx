@@ -2,6 +2,7 @@ import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
+import { BROCHE } from '../img';
 
 /**
  * Broche de kebab procédurale (döner vertical).
@@ -11,7 +12,7 @@ import * as THREE from 'three';
  */
 export default function Broche({ quality = 'high' }) {
   const group = useRef();
-  const meatTex = useTexture('/assets/broche.jpg');
+  const meatTex = useTexture(BROCHE);
 
   const geometry = useMemo(() => {
     // Profil radial (x = rayon, y = hauteur) — plus large au tiers supérieur.

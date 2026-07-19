@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SceneCanvas from '../three/SceneCanvas';
 import HeroScene from '../three/HeroScene';
 import { usePrefersReducedMotion, useQualityTier } from '../hooks/useEnv';
+import { BROCHE } from '../img';
 
 export default function Hero({ started }) {
   const heroRef = useRef(null);
@@ -34,7 +35,7 @@ export default function Hero({ started }) {
 
   return (
     <header className="hero" ref={heroRef}>
-      <div className="hero-bg" style={{ backgroundImage: "url('/assets/broche.jpg')" }} />
+      <div className="hero-bg" style={{ backgroundImage: `url(${BROCHE})` }} />
       <SceneCanvas
         className="hero-3d"
         dpr={[1, quality === 'low' ? 1.5 : 2]}

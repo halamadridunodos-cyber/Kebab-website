@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:html": "vite build --config vite.config.singlefile.js",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.3",
     "playwright-core": "^1.61.1",
-    "vite": "^5.4.10"
+    "vite": "^5.4.10",
+    "vite-plugin-singlefile": "^2.3.3"
   }
 }
