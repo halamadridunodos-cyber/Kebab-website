@@ -150,21 +150,48 @@ canvas{display:block}
 /* piste de scroll pour piloter le montage 3D (desktop) */
 .prepa-track{position:relative}
 
-/* ---------- GALERIE PRODUITS (photos) ---------- */
-.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-.pcard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(18,12,8,.5);transition:border-color .4s,transform .4s,box-shadow .4s}
-.pcard:hover{border-color:rgba(232,176,75,.45);transform:translateY(-5px);box-shadow:0 26px 50px -24px rgba(255,90,31,.5)}
-.pcard-media{position:relative;aspect-ratio:4/3;overflow:hidden;background:radial-gradient(120% 100% at 50% 20%,#1c130b,#0a0806)}
-.pcard-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s cubic-bezier(.16,1,.3,1)}
-.pcard:hover .pcard-img{transform:scale(1.07)}
-.pcard-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(10,8,6,.6))}
-.pcard-ph{position:absolute;inset:0;display:grid;place-items:center}
-.pcard-ph span{font-family:'Space Mono';font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(242,235,224,.32);border:1px dashed rgba(232,176,75,.28);padding:9px 14px;border-radius:100px}
-.pcard-body{padding:15px 18px 18px}
-.pcard-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:7px}
-.pcard-head h3{font-size:clamp(20px,2.5vw,26px);color:var(--cream)}
-.pcard-price{font-family:'Space Mono';font-size:11.5px;color:var(--gold);white-space:nowrap}
-.pcard-body p{font-size:13.5px;color:var(--smoke);line-height:1.55}
+/* ---------- GALERIE PRODUITS (éditoriale) ---------- */
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.pcard{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0f0a07;transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .5s,border-color .5s}
+.pcard-feature{grid-column:span 2;grid-row:span 2}
+.pcard:hover{transform:translateY(-6px);border-color:rgba(232,176,75,.5);box-shadow:0 34px 62px -30px rgba(255,90,31,.55)}
+.pcard-media{position:relative;aspect-ratio:3/4;overflow:hidden}
+.pcard-feature .pcard-media{aspect-ratio:auto;height:100%}
+@media(max-width:980px){
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .pcard-feature{grid-column:span 2;grid-row:span 1}
+  .pcard-feature .pcard-media{aspect-ratio:16/10}
+}
+@media(max-width:560px){
+  .pgrid{grid-template-columns:1fr}
+  .pcard-feature{grid-column:span 1}
+  .pcard-media,.pcard-feature .pcard-media{aspect-ratio:4/3}
+}
+.pcard-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .9s cubic-bezier(.16,1,.3,1);filter:saturate(1.05) contrast(1.03)}
+.pcard:hover .pcard-img{transform:scale(1.08)}
+.pcard-mono{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(120% 100% at 50% 15%,#1e140b,#0a0806),repeating-linear-gradient(45deg,rgba(232,176,75,.045) 0 2px,transparent 2px 15px)}
+.pcard-mono span{font-family:'Anton';font-size:clamp(46px,8vw,86px);color:transparent;-webkit-text-stroke:1px rgba(232,176,75,.32);letter-spacing:.02em}
+.pcard-media::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(10,8,6,.12) 0%,transparent 30%,transparent 44%,rgba(8,5,3,.88) 100%)}
+.pcard-tag{position:absolute;top:12px;left:12px;z-index:3;font-family:'Space Mono';font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:rgba(10,8,6,.5);backdrop-filter:blur(6px);border:1px solid var(--line);padding:6px 10px;border-radius:100px}
+.pcard-overlay{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:18px}
+.pcard-title{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.pcard-title h3{font-family:'Anton';font-size:clamp(24px,3vw,36px);color:var(--cream);text-transform:uppercase;line-height:.9}
+.pcard-price{font-family:'Space Mono';font-weight:700;font-size:14px;color:var(--ink);background:var(--gold);padding:5px 11px;border-radius:100px;white-space:nowrap;box-shadow:0 6px 18px -6px rgba(232,176,75,.7)}
+.pcard-desc{margin-top:8px;max-height:0;opacity:0;overflow:hidden;color:var(--smoke);font-size:13.5px;line-height:1.5;transition:max-height .5s cubic-bezier(.16,1,.3,1),opacity .4s,margin-top .4s}
+.pcard:hover .pcard-desc{max-height:90px;opacity:1}
+
+/* ---------- HÉRO : badges & chip de confiance ---------- */
+.hero-badges{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:0 auto 26px;max-width:540px}
+.hbadge{font-family:'Space Mono';font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);background:rgba(10,8,6,.42);backdrop-filter:blur(8px);border:1px solid var(--line);padding:8px 13px;border-radius:100px}
+.hbadge-star{color:var(--gold)}
+.hbadge-star b{color:var(--cream);font-weight:700}
+
+/* ---------- CARTE : survol des lignes ---------- */
+.mrow{border-radius:6px;padding-left:8px;padding-right:8px;margin:0 -8px;transition:background .3s}
+.mrow:hover{background:rgba(232,176,75,.05)}
+.mrow:hover .nm{color:var(--gold)}
+.filter{transition:all .3s cubic-bezier(.16,1,.3,1)}
+.filter.on{box-shadow:0 8px 22px -10px rgba(232,176,75,.7)}
 
 /* ---------- RÉSEAUX SOCIAUX ---------- */
 .socials{display:flex;gap:10px;flex-wrap:wrap}

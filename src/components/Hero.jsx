@@ -13,8 +13,12 @@ export default function Hero({ started }) {
   useEffect(() => {
     if (reduce) return;
     let raf;
+    const t0 = performance.now();
     const loop = () => {
-      if (bgRef.current) bgRef.current.style.transform = `translateY(${scrollY * 0.18}px) scale(1.08)`;
+      // Parallaxe verticale + très léger « Ken Burns » (respiration lente de l'image).
+      const t = (performance.now() - t0) / 1000;
+      const zoom = 1.1 + Math.sin(t * 0.12) * 0.03;
+      if (bgRef.current) bgRef.current.style.transform = `translateY(${scrollY * 0.16}px) scale(${zoom})`;
       raf = requestAnimationFrame(loop);
     };
     loop();
@@ -40,6 +44,12 @@ export default function Hero({ started }) {
           <span className="rw"><i><em>BRESSE</em></i></span>
         </h1>
         <p className="sub rev">Broche maison 100 % veau, montée à la main couche par couche. Tranchée à la commande.</p>
+        <div className="hero-badges rev">
+          <span className="hbadge">100 % Veau</span>
+          <span className="hbadge">Halal</span>
+          <span className="hbadge">Broche maison</span>
+          <span className="hbadge hbadge-star"><b>4,8</b> ★ · Google</span>
+        </div>
         <div className="hero-cta rev">
           <motion.a href="#carte" className="btn primary" whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.98 }} transition={{ type: 'spring', stiffness: 400, damping: 22 }}>Voir la carte</motion.a>
           <motion.a href="tel:+33651280674" className="btn" whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.98 }} transition={{ type: 'spring', stiffness: 400, damping: 22 }}>06 51 28 06 74</motion.a>

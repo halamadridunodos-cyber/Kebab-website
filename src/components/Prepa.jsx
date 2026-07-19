@@ -2,28 +2,34 @@ import { useReveal } from '../hooks/useReveal';
 import { PHOTOS } from '../assets';
 
 /**
- * Section « En images » : une photo par produit (plus de montage 3D).
- * Les produits sans photo affichent un emplacement prêt à recevoir l'image.
+ * Galerie produits « éditoriale » : une photo par produit, titre + prix incrustés,
+ * description révélée au survol. Les produits sans photo affichent un emplacement
+ * de marque soigné (monogramme O'B) — jamais un placeholder « vide ».
  */
 const PRODUITS = [
-  { n: 'Kebab', p: 'Seul 9€ · Menu 12€', d: 'Broche maison 100 % veau, salade, tomates, oignons, sauce au choix.', img: PHOTOS.kebab },
-  { n: 'Tacos', p: 'Seul 9,50€ · Menu 12,50€', d: 'Viande, frites, sauce fromagère, le tout gratiné.', img: null },
-  { n: 'Burger', p: 'dès 6€', d: 'Pain toasté, steak, cheddar, sauce maison.', img: null },
-  { n: 'Assiette', p: 'dès 14€', d: 'Viande, frites, salade — servie généreusement.', img: null },
+  { n: 'Kebab', p: '9€', tag: 'Signature', d: 'Broche maison 100 % veau, salade, tomates, oignons, sauce au choix.', img: PHOTOS.kebab, feature: true },
+  { n: 'Tacos', p: '9,50€', tag: 'Gratiné', d: 'Viande, frites, sauce fromagère, le tout gratiné à la commande.', img: null },
+  { n: 'Burger', p: '6€', tag: 'Maison', d: 'Pain toasté, steak, cheddar, sauce maison.', img: null },
+  { n: 'Assiette', p: '14€', tag: 'Généreux', d: 'Viande, frites, salade — servie généreusement.', img: null },
+  { n: 'Grillades', p: '16€', tag: 'Braise', d: 'Côtelettes, adana, iskender — grillées à la commande.', img: null },
 ];
 
 function Card({ item }) {
   const ref = useReveal();
   return (
-    <article className="pcard rev" ref={ref}>
+    <article className={`pcard rev${item.feature ? ' pcard-feature' : ''}`} ref={ref}>
       <div className="pcard-media">
         {item.img
           ? <div className="pcard-img" style={{ backgroundImage: `url(${item.img})` }} />
-          : <div className="pcard-ph"><span>Photo à venir</span></div>}
-      </div>
-      <div className="pcard-body">
-        <div className="pcard-head"><h3>{item.n}</h3><span className="pcard-price">{item.p}</span></div>
-        <p>{item.d}</p>
+          : <div className="pcard-mono" aria-hidden="true"><span>O'B</span></div>}
+        <span className="pcard-tag">{item.tag}</span>
+        <div className="pcard-overlay">
+          <div className="pcard-title">
+            <h3>{item.n}</h3>
+            <span className="pcard-price">{item.p}</span>
+          </div>
+          <p className="pcard-desc">{item.d}</p>
+        </div>
       </div>
     </article>
   );
