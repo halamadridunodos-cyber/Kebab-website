@@ -20,6 +20,8 @@ export default function App() {
 
   return (
     <>
+      <div className="ambient" aria-hidden="true" />
+      <div className="grain" aria-hidden="true" />
       <Preloader onDone={() => setStarted(true)} />
       <Cursor />
       <Nav />
