@@ -31,8 +31,8 @@ export default function Cursor() {
 
   return (
     <>
-      <div className="cursor" ref={dot} />
-      <div className="cursor-ring" ref={ring} />
+      <div className="cursor" ref={dot} aria-hidden="true" />
+      <div className="cursor-ring" ref={ring} aria-hidden="true" />
     </>
   );
 }
