@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SceneCanvas from '../three/SceneCanvas';
 import HeroScene from '../three/HeroScene';
 import { usePrefersReducedMotion, useQualityTier } from '../hooks/useEnv';
-import { BROCHE } from '../img';
 
 export default function Hero({ started }) {
   const heroRef = useRef(null);
@@ -35,11 +36,12 @@ export default function Hero({ started }) {
 
   return (
     <header className="hero" ref={heroRef}>
-      <div className="hero-bg" style={{ backgroundImage: `url(${BROCHE})` }} />
+      <div className="hero-bg" />
       <SceneCanvas
         className="hero-3d"
         dpr={[1, quality === 'low' ? 1.5 : 2]}
         camera={{ position: [0, 0.35, 7.2], fov: 34 }}
+        gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.92 }}
         rootMargin="300px"
       >
         <HeroScene quality={quality} reduce={reduce} scrollRef={scrollRef} pixelRatio={pr} />
@@ -53,8 +55,8 @@ export default function Hero({ started }) {
         </h1>
         <p className="sub rev">Broche maison 100 % veau, montée à la main couche par couche. Tranchée à la commande.</p>
         <div className="hero-cta rev">
-          <a href="#carte" className="btn primary">Voir la carte</a>
-          <a href="tel:+33651280674" className="btn">06 51 28 06 74</a>
+          <motion.a href="#carte" className="btn primary" whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.98 }} transition={{ type: 'spring', stiffness: 400, damping: 22 }}>Voir la carte</motion.a>
+          <motion.a href="tel:+33651280674" className="btn" whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.98 }} transition={{ type: 'spring', stiffness: 400, damping: 22 }}>06 51 28 06 74</motion.a>
         </div>
       </div>
       <div className="scrollcue"><span>Scroll</span><i /></div>

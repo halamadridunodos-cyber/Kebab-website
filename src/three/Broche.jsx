@@ -1,53 +1,46 @@
 import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
-import { BROCHE } from '../img';
+import { brocheTextures } from './textures';
 
 /**
- * Broche de kebab procédurale (döner vertical).
- * - Profil « teardrop » via LatheGeometry, déformé pour imiter l'empilage main.
- * - Texture de surface rôtie (broche.jpg) en map + relief léger.
- * - Broche métallique + coiffe, tourne lentement autour de Y.
+ * Broche de kebab (döner vertical) fidèle à une vraie machine :
+ * colonne de veau beige empilée en couches horizontales, sommet arrondi,
+ * pointe basse brunie. Tourne lentement autour de la broche métallique.
  */
 export default function Broche({ quality = 'high' }) {
   const group = useRef();
-  const meatTex = useTexture(BROCHE);
+  const tex = useMemo(() => brocheTextures(quality === 'low' ? 512 : 1024), [quality]);
 
   const geometry = useMemo(() => {
-    // Profil radial (x = rayon, y = hauteur) — plus large au tiers supérieur.
     const pts = [];
     const H = 3.4;
     const bottom = -H / 2;
-    const steps = 42;
+    const steps = 60;
+    // Profil : pointe étroite en bas, corps plein et bombé, sommet arrondi.
     const profile = (u) => {
-      // u de 0 (bas) à 1 (haut)
-      const bulge = Math.sin(Math.pow(u, 0.85) * Math.PI); // ventru au milieu
-      const taperTop = 1 - Math.pow(Math.max(0, u - 0.7) / 0.3, 1.6) * 0.55;
-      const base = 0.16 + bulge * 0.5;
-      return Math.max(0.08, base * taperTop);
+      const body = Math.sin(Math.pow(u, 0.72) * Math.PI * 0.98); // ventre haut-médian
+      let r = 0.13 + body * 0.5;
+      r *= 0.82 + u * 0.28;                                       // un peu plus large vers le haut
+      if (u > 0.86) r *= Math.sqrt(Math.max(0, 1 - Math.pow((u - 0.86) / 0.14, 2))) * 0.55 + 0.45; // dôme
+      if (u < 0.12) r *= 0.4 + (u / 0.12) * 0.6;                  // pointe basse
+      return Math.max(0.05, r);
     };
-    for (let i = 0; i <= steps; i++) {
-      const u = i / steps;
-      pts.push(new THREE.Vector2(profile(u), bottom + u * H));
-    }
-    const radial = quality === 'low' ? 48 : 96;
+    for (let i = 0; i <= steps; i++) { const u = i / steps; pts.push(new THREE.Vector2(profile(u), bottom + u * H)); }
+    const radial = quality === 'low' ? 56 : 110;
     const geo = new THREE.LatheGeometry(pts, radial);
 
-    // Déformation : strates horizontales + bruit -> empilage irrégulier « fait main ».
+    // Déformation : strates horizontales + bruit -> empilage « fait main ».
     const pos = geo.attributes.position;
     const v = new THREE.Vector3();
     for (let i = 0; i < pos.count; i++) {
       v.fromBufferAttribute(pos, i);
       const ang = Math.atan2(v.z, v.x);
       const r = Math.hypot(v.x, v.z);
-      const layers = Math.sin(v.y * 9.0) * 0.018 + Math.sin(v.y * 23.0 + ang * 2.0) * 0.01;
-      const rough = Math.sin(ang * 8.0 + v.y * 4.0) * 0.014 + Math.sin(ang * 17.0) * 0.008;
+      const layers = Math.sin(v.y * 11.0) * 0.022 + Math.sin(v.y * 27.0 + ang * 1.5) * 0.012;
+      const rough = Math.sin(ang * 7.0 + v.y * 3.0) * 0.016 + Math.sin(ang * 15.0) * 0.009;
       const nr = r + layers + rough;
-      if (r > 0.001) {
-        v.x = (v.x / r) * nr;
-        v.z = (v.z / r) * nr;
-      }
+      if (r > 0.001) { v.x = (v.x / r) * nr; v.z = (v.z / r) * nr; }
       pos.setXYZ(i, v.x, v.y, v.z);
     }
     geo.computeVertexNormals();
@@ -55,46 +48,36 @@ export default function Broche({ quality = 'high' }) {
   }, [quality]);
 
   const meatMaterial = useMemo(() => {
-    meatTex.wrapS = meatTex.wrapT = THREE.RepeatWrapping;
-    meatTex.repeat.set(3, 2);
-    meatTex.colorSpace = THREE.SRGBColorSpace;
-    meatTex.anisotropy = 8;
+    [tex.map, tex.normalMap, tex.roughnessMap].forEach((t) => t.repeat.set(4, 1));
     return new THREE.MeshStandardMaterial({
-      map: meatTex,
-      bumpMap: meatTex,
-      bumpScale: 0.035,
-      roughness: 0.78,
-      metalness: 0.05,
-      emissive: new THREE.Color('#4a1200'),
-      emissiveMap: meatTex,
-      emissiveIntensity: 0.18,
+      map: tex.map,
+      normalMap: tex.normalMap,
+      normalScale: new THREE.Vector2(1, 1),
+      roughnessMap: tex.roughnessMap,
+      roughness: 1,
+      metalness: 0,
+      envMapIntensity: 0.4,
+      emissive: new THREE.Color('#1c0e05'),
+      emissiveIntensity: 0.05,
     });
-  }, [meatTex]);
+  }, [tex]);
 
   const rodMaterial = useMemo(
-    () => new THREE.MeshStandardMaterial({ color: '#c8ccd2', roughness: 0.28, metalness: 0.95 }),
+    () => new THREE.MeshStandardMaterial({ color: '#c8ccd2', roughness: 0.26, metalness: 0.96, envMapIntensity: 1.1 }),
     [],
   );
 
-  useFrame((state, delta) => {
-    if (group.current) group.current.rotation.y += delta * 0.35; // rotation lente
-  });
+  useFrame((_, delta) => { if (group.current) group.current.rotation.y += delta * 0.32; });
 
   return (
     <group ref={group}>
       <mesh geometry={geometry} material={meatMaterial} castShadow />
       {/* Broche métallique traversante */}
-      <mesh material={rodMaterial}>
-        <cylinderGeometry args={[0.045, 0.045, 4.7, 20]} />
-      </mesh>
-      {/* Coiffe supérieure */}
-      <mesh position={[0, 2.05, 0]} material={rodMaterial}>
-        <coneGeometry args={[0.16, 0.34, 24]} />
-      </mesh>
-      {/* Embase / plateau bas */}
-      <mesh position={[0, -1.95, 0]} material={rodMaterial}>
-        <cylinderGeometry args={[0.42, 0.5, 0.12, 32]} />
-      </mesh>
+      <mesh material={rodMaterial}><cylinderGeometry args={[0.04, 0.04, 4.7, 20]} /></mesh>
+      {/* Écrou / coiffe supérieure */}
+      <mesh position={[0, 1.95, 0]} material={rodMaterial}><sphereGeometry args={[0.11, 20, 16]} /></mesh>
+      {/* Embase basse */}
+      <mesh position={[0, -1.9, 0]} material={rodMaterial}><cylinderGeometry args={[0.16, 0.2, 0.14, 24]} /></mesh>
     </group>
   );
 }

@@ -14,10 +14,12 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AudioToggle from './components/AudioToggle';
 import { useFireAudio } from './hooks/useFireAudio';
+import { useSmoothScroll } from './hooks/useSmoothScroll';
 
 export default function App() {
   const [started, setStarted] = useState(false);
   const { enabled, toggle } = useFireAudio();
+  useSmoothScroll();
 
   return (
     <>

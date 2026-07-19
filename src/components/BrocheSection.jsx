@@ -1,8 +1,8 @@
+import * as THREE from 'three';
 import { useReveal } from '../hooks/useReveal';
 import SceneCanvas from '../three/SceneCanvas';
-import AmbianceScene from '../three/AmbianceScene';
+import NeDuFeuScene from '../three/NeDuFeuScene';
 import { usePrefersReducedMotion, useQualityTier } from '../hooks/useEnv';
-import { BROCHE } from '../img';
 
 export default function BrocheSection() {
   const head = useReveal();
@@ -18,10 +18,13 @@ export default function BrocheSection() {
           <div className="meta">Broche maison · 100 % veau<br />Montée main · rôtie flamme</div>
         </div>
         <div className="story-grid">
-          <div className="story-vis rev" ref={useReveal()}>
-            <div className="ph" style={{ backgroundImage: `url(${BROCHE})` }} />
-            <SceneCanvas className="r3f-layer" camera={{ position: [0, 0, 5], fov: 40 }} gl={{ alpha: true }}>
-              <AmbianceScene quality={quality} reduce={reduce} pixelRatio={pr} />
+          <div className="story-vis broche-vis rev" ref={useReveal()}>
+            <SceneCanvas
+              className="r3f-layer"
+              camera={{ position: [0, 0.25, 6.3], fov: 42 }}
+              gl={{ alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.72 }}
+            >
+              <NeDuFeuScene quality={quality} reduce={reduce} pixelRatio={pr} />
             </SceneCanvas>
             <span className="story-tag">Rôtissoire · 100 % veau</span>
           </div>

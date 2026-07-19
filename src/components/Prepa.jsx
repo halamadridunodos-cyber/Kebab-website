@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SceneCanvas from '../three/SceneCanvas';
@@ -84,8 +85,8 @@ export default function Prepa() {
             <SceneCanvas
               className="r3f-layer"
               dpr={[1, quality === 'low' ? 1.5 : 2]}
-              camera={{ position: [0, 1, 5.4], fov: 42 }}
-              gl={{ alpha: true }}
+              camera={{ position: [2, 2.4, 4.6], fov: 40 }}
+              gl={{ alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.95 }}
               shadows
             >
               <SandwichScene quality={quality} reduce={reduce} scrollRef={scrollRef} />

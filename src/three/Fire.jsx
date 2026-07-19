@@ -44,12 +44,12 @@ void main(){
 
   float alpha = shape * uIntensity;
   if(alpha < 0.01) discard;
-  gl_FragColor = vec4(col * (0.5 + core*0.7), alpha * 0.92);
+  gl_FragColor = vec4(col * (0.45 + core*0.6), alpha * 0.8);
 }
 `;
 
 /** Une nappe de flamme composée de plusieurs plans additifs face caméra. */
-export default function Fire({ position = [0, 0, 0], scale = [3, 4, 1], layers = 3, quality = 'high' }) {
+export default function Fire({ position = [0, 0, 0], scale = [3, 4, 1], layers = 3, quality = 'high', intensity = 1 }) {
   const group = useRef();
   const mats = useRef([]);
 
@@ -68,9 +68,9 @@ export default function Fire({ position = [0, 0, 0], scale = [3, 4, 1], layers =
         uTime: { value: 0 },
         uIntensity: { value: 1 },
         uSeed: { value: p.seed },
-        uLow: { value: new THREE.Color('#7a1500') },
-        uMid: { value: new THREE.Color('#ff5a1f') },
-        uHigh: { value: new THREE.Color('#ffd27a') },
+        uLow: { value: new THREE.Color('#5a0e00') },
+        uMid: { value: new THREE.Color('#ec4a12') },
+        uHigh: { value: new THREE.Color('#ff9a34') },
       })),
     [planes],
   );
@@ -82,7 +82,7 @@ export default function Fire({ position = [0, 0, 0], scale = [3, 4, 1], layers =
     mats.current.forEach((m, i) => {
       if (!m) return;
       m.uniforms.uTime.value = t;
-      m.uniforms.uIntensity.value = flick * (1 - i * 0.14);
+      m.uniforms.uIntensity.value = flick * (1 - i * 0.14) * intensity;
     });
     if (group.current) group.current.rotation.y = state.camera ? 0 : 0;
   });
