@@ -1,32 +1,27 @@
 import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
 import { motion } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import SceneCanvas from '../three/SceneCanvas';
-import HeroScene from '../three/HeroScene';
-import { usePrefersReducedMotion, useQualityTier } from '../hooks/useEnv';
+import { PHOTOS } from '../assets';
+import { usePrefersReducedMotion } from '../hooks/useEnv';
 
+/** Accueil : une seule photo (pas de 3D), voile dégradé + titre révélé. */
 export default function Hero({ started }) {
   const heroRef = useRef(null);
-  const scrollRef = useRef(0);
+  const bgRef = useRef(null);
   const reduce = usePrefersReducedMotion();
-  const quality = useQualityTier();
-  const pr = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 2) : 1;
 
-  // Scroll → progression 0..1 sur le hero (pilote le recul caméra).
+  // Parallaxe verticale légère (photo qui glisse un peu au scroll).
   useEffect(() => {
-    const st = ScrollTrigger.create({
-      trigger: heroRef.current,
-      start: 'top top',
-      end: 'bottom top',
-      scrub: true,
-      onUpdate: (self) => { scrollRef.current = self.progress; },
-    });
-    return () => st.kill();
-  }, []);
+    if (reduce) return;
+    let raf;
+    const loop = () => {
+      if (bgRef.current) bgRef.current.style.transform = `translateY(${scrollY * 0.18}px) scale(1.08)`;
+      raf = requestAnimationFrame(loop);
+    };
+    loop();
+    return () => cancelAnimationFrame(raf);
+  }, [reduce]);
 
-  // Révélation du titre + CTA à la fin du préchargement.
+  // Révélation du titre + CTA après le préchargement.
   useEffect(() => {
     if (!started) return;
     const words = heroRef.current.querySelectorAll('#heroTitle .rw');
@@ -36,16 +31,7 @@ export default function Hero({ started }) {
 
   return (
     <header className="hero" ref={heroRef}>
-      <div className="hero-bg" />
-      <SceneCanvas
-        className="hero-3d"
-        dpr={[1, quality === 'low' ? 1.5 : 2]}
-        camera={{ position: [0, 0.35, 7.2], fov: 34 }}
-        gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.92 }}
-        rootMargin="300px"
-      >
-        <HeroScene quality={quality} reduce={reduce} scrollRef={scrollRef} pixelRatio={pr} />
-      </SceneCanvas>
+      <div className="hero-bg hero-photo" ref={bgRef} style={{ backgroundImage: `url(${PHOTOS.hero})` }} />
       <div className="hero-veil" />
       <div className="hero-in">
         <span className="eyebrow rev">Montréal-la-Cluse · Restaurant turc</span>

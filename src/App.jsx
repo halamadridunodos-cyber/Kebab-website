@@ -12,13 +12,10 @@ import Avis from './components/Avis';
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import AudioToggle from './components/AudioToggle';
-import { useFireAudio } from './hooks/useFireAudio';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 
 export default function App() {
   const [started, setStarted] = useState(false);
-  const { enabled, toggle } = useFireAudio();
   useSmoothScroll();
 
   return (
@@ -27,7 +24,7 @@ export default function App() {
       <Cursor />
       <Nav />
       <Hero started={started} />
-      <Marquee items={['Broche maison', '100 % Veau', 'Tranchée à la minute', 'Montée à la main', 'Rôtie à la flamme']} />
+      <Marquee items={['Broche maison', '100 % Veau', 'Halal', 'Tranchée à la minute', 'Rôtie à la flamme']} />
       <Stats />
       <BrocheSection />
       <Marquee alt items={['Kebab', 'Tacos', 'Burgers', 'Assiettes', 'Grillades', 'Wings', 'Tenders']} />
@@ -37,7 +34,6 @@ export default function App() {
       <Faq />
       <Contact />
       <Footer />
-      <AudioToggle enabled={enabled} onToggle={toggle} />
     </>
   );
 }

@@ -38,7 +38,7 @@ export const MENU = [
 
 export const SAUCES = ['Blanche', 'Harissa', 'Samouraï', 'Algérienne', 'Andalouse', 'Ketchup', 'Mayonnaise', 'Moutarde', 'Barbecue', 'Burger', 'Curry', 'Chili Thai', 'Biggy Burger', 'Marocaine', 'Américaine'];
 export const SUPP = ['Kebab', 'Escalope', 'Kofte', 'Steak', 'Tenders', 'Cordon Bleu'];
-export const GRAT = ['Raclette', 'cheddar', 'Modza', 'Chèvre Miel'];
+export const GRAT = ['Raclette', 'cheddar', 'Mozza', 'Chèvre Miel'];
 
 /* avis 100% RÉELS — fiche Google O'Bresse */
 export const REVIEWS = [
@@ -63,8 +63,8 @@ export const BUILD_STEPS = [
 
 export const FAQ = [
   { q: 'La viande est-elle vraiment faite maison ?', a: "Oui. La broche est montée à la main dans le restaurant, couche par couche, 100 % veau. Elle rôtit progressivement devant la source de chaleur et n'est tranchée qu'au moment de la commande." },
-  { q: 'Quels sont vos horaires ?', a: 'Le restaurant est ouvert et ferme à 23:00. Pour les horaires précis du jour, le mieux reste de nous appeler au 06 51 28 06 74.' },
+  { q: 'La viande est-elle halal ?', a: 'Oui, la viande est 100 % halal.' },
+  { q: 'Quels sont vos horaires ?', a: 'Nous sommes ouverts tous les jours (7j/7) de 11h à 14h et de 17h30 à 23h.' },
   { q: 'Peut-on commander à emporter ?', a: 'Oui, sur place ou à emporter. Appelez-nous pour préparer votre commande à l\'avance et éviter l\'attente.' },
-  { q: 'Quel budget prévoir ?', a: 'Comptez entre 10 et 20 € par personne. Les sandwichs démarrent à 8 €, les menus à 9 €, et les assiettes à 14 €.' },
   { q: 'Proposez-vous des menus enfant ?', a: 'Oui, à 7 € : kebab, burger, tenders ou nuggets, servis avec frites, une boisson et un jouet.' },
 ];

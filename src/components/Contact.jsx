@@ -1,4 +1,5 @@
 import { useReveal } from '../hooks/useReveal';
+import Socials from './Socials';
 
 export default function Contact() {
   const head = useReveal();
@@ -23,14 +24,14 @@ export default function Contact() {
             <p className="ct-base">Broche maison · 100 % veau</p>
             <dl>
               <div className="ct-row"><dt>Adresse</dt><dd>2 Av. de Bresse<br />01460 Montréal-la-Cluse</dd></div>
-              <div className="ct-row"><dt>Horaires</dt><dd className="accent">Ouvert · Ferme à 23:00</dd></div>
+              <div className="ct-row"><dt>Horaires</dt><dd className="accent">7j/7 · 11h – 14h<br />&amp; 17h30 – 23h</dd></div>
               <div className="ct-row"><dt>Téléphone</dt><dd>+33 6 51 28 06 74</dd></div>
-              <div className="ct-row"><dt>Budget</dt><dd>10 – 20 € par personne</dd></div>
             </dl>
             <div className="ct-cta">
               <a href="tel:+33651280674" className="btn primary">Appeler</a>
               <a href="https://www.google.com/maps?q=Restaurant+O'Bresse,2+Av.+de+Bresse,01460+Montr%C3%A9al-la-Cluse" target="_blank" rel="noopener" className="btn">Itinéraire</a>
             </div>
+            <Socials className="ct-socials" />
           </div>
         </div>
       </div>

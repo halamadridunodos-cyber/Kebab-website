@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { REVIEWS } from '../data';
-import Counter from './Counter';
 import { useReveal } from '../hooks/useReveal';
 
 export default function Avis() {
   const head = useReveal();
   const gridRef = useRef(null);
-  const [starsLit, setStarsLit] = useState(0);
 
   useEffect(() => {
     const grid = gridRef.current;
@@ -18,9 +16,6 @@ export default function Avis() {
     return () => io.disconnect();
   }, []);
 
-  // Allume les étoiles une par une après le compteur de note.
-  const lightStars = () => [0, 1, 2, 3, 4].forEach((i) => setTimeout(() => setStarsLit(i + 1), i * 110));
-
   return (
     <section className="section reviews" id="avis">
       <div className="wrap">
@@ -29,9 +24,9 @@ export default function Avis() {
           <div className="meta">Note Google vérifiée<br />Montréal-la-Cluse</div>
         </div>
         <div className="rv-hero rev" ref={useReveal()}>
-          <Counter tag="div" className="rv-score" to={4.8} dec={1} onDone={lightStars} />
+          <div className="rv-score">4,8</div>
           <div className="rv-meta">
-            <span className="stars">{[0, 1, 2, 3, 4].map((i) => <i key={i} className={i < starsLit ? 'on' : ''}>★</i>)}</span>
+            <span className="stars">{[0, 1, 2, 3, 4].map((i) => <i key={i} className="on">★</i>)}</span>
             <p className="rv-count">27 avis sur Google</p>
             <p className="rv-open">Ouvert · Ferme à 23:00</p>
           </div>

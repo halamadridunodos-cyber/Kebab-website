@@ -1,14 +1,9 @@
-import * as THREE from 'three';
 import { useReveal } from '../hooks/useReveal';
-import SceneCanvas from '../three/SceneCanvas';
-import NeDuFeuScene from '../three/NeDuFeuScene';
-import { usePrefersReducedMotion, useQualityTier } from '../hooks/useEnv';
+import { PHOTOS } from '../assets';
 
+/** Section 1 « Née du feu » : une seule photo de la broche (pas de 3D, pas de feu). */
 export default function BrocheSection() {
   const head = useReveal();
-  const reduce = usePrefersReducedMotion();
-  const quality = useQualityTier();
-  const pr = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 2) : 1;
 
   return (
     <section className="section story" id="broche">
@@ -18,14 +13,8 @@ export default function BrocheSection() {
           <div className="meta">Broche maison · 100 % veau<br />Montée main · rôtie flamme</div>
         </div>
         <div className="story-grid">
-          <div className="story-vis broche-vis rev" ref={useReveal()}>
-            <SceneCanvas
-              className="r3f-layer"
-              camera={{ position: [0, 0.25, 6.3], fov: 42 }}
-              gl={{ alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.72 }}
-            >
-              <NeDuFeuScene quality={quality} reduce={reduce} pixelRatio={pr} />
-            </SceneCanvas>
+          <div className="story-vis rev" ref={useReveal()}>
+            <div className="ph" style={{ backgroundImage: `url(${PHOTOS.broche})` }} />
             <span className="story-tag">Rôtissoire · 100 % veau</span>
           </div>
           <div className="story-copy">
@@ -34,7 +23,7 @@ export default function BrocheSection() {
             <div className="stats rev" style={{ gridTemplateColumns: 'repeat(3,1fr)' }} ref={useReveal()}>
               <div className="stat"><b>100%</b><span>Veau</span></div>
               <div className="stat"><b>Maison</b><span>Montée main</span></div>
-              <div className="stat"><b>Minute</b><span>Tranchée</span></div>
+              <div className="stat"><b>Halal</b><span>Certifié</span></div>
             </div>
           </div>
         </div>
