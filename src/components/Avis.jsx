@@ -28,7 +28,7 @@ export default function Avis() {
           <div className="rv-meta">
             <span className="stars">{[0, 1, 2, 3, 4].map((i) => <i key={i} className="on">★</i>)}</span>
             <p className="rv-count">27 avis sur Google</p>
-            <p className="rv-open">Ouvert · Ferme à 23:00</p>
+            <p className="rv-open">7j/7 · 11h–14h &amp; 17h30–23h</p>
           </div>
           <a href="https://www.google.com/maps?q=Restaurant+O'Bresse,2+Av.+de+Bresse,01460+Montr%C3%A9al-la-Cluse" target="_blank" rel="noopener" className="btn">Voir sur Google</a>
         </div>

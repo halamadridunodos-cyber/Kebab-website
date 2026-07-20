@@ -12,6 +12,7 @@ import Avis from './components/Avis';
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import StickyCall from './components/StickyCall';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
       <Faq />
       <Contact />
       <Footer />
+      <StickyCall />
     </>
   );
 }
