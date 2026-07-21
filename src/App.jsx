@@ -7,6 +7,7 @@ import Marquee from './components/Marquee';
 import Stats from './components/Stats';
 import BrocheSection from './components/BrocheSection';
 import Prepa from './components/Prepa';
+import CinematicBand from './components/CinematicBand';
 import Carte from './components/Carte';
 import Avis from './components/Avis';
 import Faq from './components/Faq';
@@ -32,6 +33,7 @@ export default function App() {
       <BrocheSection />
       <Marquee alt items={['Kebab', 'Tacos', 'Burgers', 'Assiettes', 'Grillades', 'Wings', 'Tenders']} />
       <Prepa />
+      <CinematicBand />
       <Carte />
       <Avis />
       <Faq />
