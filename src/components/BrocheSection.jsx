@@ -1,9 +1,15 @@
+import * as THREE from 'three';
 import { useReveal } from '../hooks/useReveal';
-import { PHOTOS } from '../assets';
+import SceneCanvas from '../three/SceneCanvas';
+import NeDuFeuScene from '../three/NeDuFeuScene';
+import { usePrefersReducedMotion, useQualityTier } from '../hooks/useEnv';
 
-/** Section 1 « Née du feu » : une seule photo de la broche (pas de 3D, pas de feu). */
+/** Section 1 « Née du feu » : scène 3D immersive — broche qui tourne devant les panneaux chauffants. */
 export default function BrocheSection() {
   const head = useReveal();
+  const reduce = usePrefersReducedMotion();
+  const quality = useQualityTier();
+  const pr = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 2) : 1;
 
   return (
     <section className="section story" id="broche">
@@ -14,7 +20,13 @@ export default function BrocheSection() {
         </div>
         <div className="story-grid">
           <div className="story-vis rev" ref={useReveal()}>
-            <div className="ph" style={{ backgroundImage: `url(${PHOTOS.broche})` }} />
+            <SceneCanvas
+              className="r3f-layer"
+              camera={{ position: [0, 0.25, 6.3], fov: 42 }}
+              gl={{ alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.85 }}
+            >
+              <NeDuFeuScene quality={quality} reduce={reduce} pixelRatio={pr} />
+            </SceneCanvas>
             <span className="story-tag">Rôtissoire · 100 % veau</span>
           </div>
           <div className="story-copy">

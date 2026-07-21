@@ -1,29 +1,30 @@
 import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
 import { motion } from 'framer-motion';
-import { PHOTOS } from '../assets';
-import { usePrefersReducedMotion } from '../hooks/useEnv';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SceneCanvas from '../three/SceneCanvas';
+import HeroScene from '../three/HeroScene';
+import { usePrefersReducedMotion, useQualityTier } from '../hooks/useEnv';
 
-/** Accueil : une seule photo (pas de 3D), voile dégradé + titre révélé. */
+/** Accueil 3D : machine à kebab (broche + panneaux chauffants + fumée) derrière le titre. */
 export default function Hero({ started }) {
   const heroRef = useRef(null);
-  const bgRef = useRef(null);
+  const scrollRef = useRef(0);
   const reduce = usePrefersReducedMotion();
+  const quality = useQualityTier();
+  const pr = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 2) : 1;
 
-  // Parallaxe verticale légère (photo qui glisse un peu au scroll).
+  // Scroll → progression 0..1 sur le hero (pilote le recul caméra).
   useEffect(() => {
-    if (reduce) return;
-    let raf;
-    const t0 = performance.now();
-    const loop = () => {
-      // Parallaxe verticale + très léger « Ken Burns » (respiration lente de l'image).
-      const t = (performance.now() - t0) / 1000;
-      const zoom = 1.1 + Math.sin(t * 0.12) * 0.03;
-      if (bgRef.current) bgRef.current.style.transform = `translateY(${scrollY * 0.16}px) scale(${zoom})`;
-      raf = requestAnimationFrame(loop);
-    };
-    loop();
-    return () => cancelAnimationFrame(raf);
-  }, [reduce]);
+    const st = ScrollTrigger.create({
+      trigger: heroRef.current,
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+      onUpdate: (self) => { scrollRef.current = self.progress; },
+    });
+    return () => st.kill();
+  }, []);
 
   // Révélation du titre + CTA après le préchargement.
   useEffect(() => {
@@ -35,7 +36,16 @@ export default function Hero({ started }) {
 
   return (
     <header className="hero" ref={heroRef}>
-      <div className="hero-bg hero-photo" ref={bgRef} style={{ backgroundImage: `url(${PHOTOS.hero})` }} />
+      <div className="hero-bg" />
+      <SceneCanvas
+        className="hero-3d"
+        dpr={[1, quality === 'low' ? 1.5 : 2]}
+        camera={{ position: [0, 0.3, 7.6], fov: 34 }}
+        gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.92 }}
+        rootMargin="300px"
+      >
+        <HeroScene quality={quality} reduce={reduce} scrollRef={scrollRef} pixelRatio={pr} />
+      </SceneCanvas>
       <div className="hero-veil" />
       <div className="hero-in">
         <span className="eyebrow rev">Montréal-la-Cluse · Restaurant turc</span>
