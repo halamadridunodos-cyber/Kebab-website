@@ -1,5 +1,6 @@
 import { useReveal } from '../hooks/useReveal';
 import Socials from './Socials';
+import { PHOTOS } from '../assets';
 
 export default function Contact() {
   const head = useReveal();
@@ -32,6 +33,9 @@ export default function Contact() {
               <a href="https://www.google.com/maps?q=Restaurant+O'Bresse,2+Av.+de+Bresse,01460+Montr%C3%A9al-la-Cluse" target="_blank" rel="noopener" className="btn">Itinéraire</a>
             </div>
             <Socials className="ct-socials" />
+            <div className="ct-photo" style={{ backgroundImage: `url(${PHOTOS.interior})` }} role="img" aria-label="La salle du restaurant O'Bresse">
+              <span>La salle</span>
+            </div>
           </div>
         </div>
       </div>
