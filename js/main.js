@@ -237,6 +237,108 @@
   }
 
   /* =========================================================
+     CARTE — filtres par catégorie
+     ========================================================= */
+  function initCarteFilter() {
+    const filters = document.getElementById("carteFilters");
+    if (!filters) return;
+    const cats = gsap.utils.toArray(".cat");
+    filters.addEventListener("click", (e) => {
+      const btn = e.target.closest(".chip");
+      if (!btn) return;
+      filters.querySelectorAll(".chip").forEach((c) => c.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const cat = btn.dataset.cat;
+      cats.forEach((c) => {
+        const show = cat === "all" || c.dataset.cat === cat;
+        c.classList.toggle("is-hidden", !show);
+        if (show) { gsap.fromTo(c, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }); }
+      });
+      ScrollTrigger.refresh();
+    });
+  }
+
+  /* =========================================================
+     FAQ — accordéon
+     ========================================================= */
+  function initFaq() {
+    gsap.utils.toArray(".qa").forEach((qa) => {
+      const btn = qa.querySelector(".qa__q");
+      const ans = qa.querySelector(".qa__a");
+      btn.addEventListener("click", () => {
+        const isOpen = qa.classList.contains("open");
+        document.querySelectorAll(".qa.open").forEach((o) => {
+          if (o !== qa) { o.classList.remove("open"); gsap.to(o.querySelector(".qa__a"), { height: 0, duration: 0.4, ease: "power2.inOut" }); }
+        });
+        if (isOpen) {
+          qa.classList.remove("open");
+          gsap.to(ans, { height: 0, duration: 0.4, ease: "power2.inOut" });
+        } else {
+          qa.classList.add("open");
+          gsap.set(ans, { height: "auto" });
+          gsap.from(ans, { height: 0, duration: 0.45, ease: "power2.out" });
+        }
+      });
+    });
+  }
+
+  /* =========================================================
+     AVIS GOOGLE — note + nombre d'avis mis à jour automatiquement
+     -----------------------------------------------------------
+     ⚙️  Pour activer la mise à jour en direct depuis Google :
+        1. Créez une clé « Places API (New) » (console Google Cloud),
+           restreinte au domaine de votre site.
+        2. Récupérez le Place ID de la fiche O'Bresse.
+        3. Renseignez CONFIG.placeId et CONFIG.apiKey ci-dessous.
+     Sans configuration (ou en cas d'échec réseau), les valeurs de
+     repli affichées restent 4,8 ★ et 27 avis.
+     ========================================================= */
+  function initGoogleRating() {
+    const CONFIG = { placeId: "", apiKey: "" };
+
+    const noteEl = document.getElementById("gNote");
+    const countEl = document.getElementById("gCount");
+    const fillEl = document.getElementById("gStarsFill");
+    if (!noteEl || !countEl || !fillEl) return;
+
+    const fr = (n) => String(n).replace(".", ",");
+    const setStars = (rating) => { fillEl.style.width = Math.max(0, Math.min(100, (rating / 5) * 100)) + "%"; };
+
+    const fbNote = parseFloat(noteEl.dataset.fallback || "4.8");
+    const fbCount = parseInt(countEl.dataset.fallback || "27", 10);
+
+    function render(rating, count, animate) {
+      setStars(rating);
+      if (animate && !prefersReduced) {
+        const a = { v: 0 }, b = { v: 0 };
+        gsap.to(a, { v: rating, duration: 1.4, ease: "power2.out", onUpdate: () => (noteEl.textContent = fr(a.v.toFixed(1))) });
+        gsap.to(b, { v: count, duration: 1.6, ease: "power2.out", onUpdate: () => (countEl.textContent = Math.round(b.v)) });
+      } else {
+        noteEl.textContent = fr(rating.toFixed(1));
+        countEl.textContent = count;
+      }
+    }
+
+    setStars(fbNote);
+    // Anime les valeurs de repli quand le bandeau entre dans le viewport
+    ScrollTrigger.create({ trigger: ".rating", start: "top 88%", once: true, onEnter: () => render(fbNote, fbCount, true) });
+
+    // Tentative de mise à jour en direct (Places API New)
+    if (CONFIG.placeId && CONFIG.apiKey) {
+      fetch(`https://places.googleapis.com/v1/places/${CONFIG.placeId}`, {
+        headers: { "X-Goog-Api-Key": CONFIG.apiKey, "X-Goog-FieldMask": "rating,userRatingCount" },
+      })
+        .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+        .then((d) => {
+          if (typeof d.rating === "number" && typeof d.userRatingCount === "number") {
+            render(d.rating, d.userRatingCount, true);
+          }
+        })
+        .catch(() => { /* conserve le repli 4,8 / 27 */ });
+    }
+  }
+
+  /* =========================================================
      BOOT
      ========================================================= */
   window.addEventListener("DOMContentLoaded", () => {
@@ -246,6 +348,9 @@
     initReveals();
     initCounters();
     initEmbers();
+    initCarteFilter();
+    initFaq();
+    initGoogleRating();
 
     if (prefersReduced) {
       document.body.classList.add("loaded");

@@ -5,11 +5,31 @@ Design éditorial noir & blanc, animations au scroll, vidéo de la broche en bou
 
 ## Aperçu
 
-- **Accueil** : photo de l'enseigne en plein écran avant le scroll
+- **Accueil** : photo de l'enseigne en plein écran (pan au scroll qui révèle la devanture)
 - **01 · La Broche** : vidéo de la broche qui tourne, en boucle continue
-- **02 · La Carte** : menu façon carte gastronomique
-- **03 · La Maison** : histoire + compteurs animés
-- **04 · Contact** : adresse, horaires, réseaux
+- **02 · La Carte** : carte complète (14 catégories · 56 produits) avec filtres
+- **03 · Les Avis** : 6 avis Google 5★ + **note et nombre d'avis mis à jour automatiquement**
+- **04 · Questions** : FAQ en accordéon
+- **05 · Contact** : adresse, horaires, réseaux + **carte Google Maps**
+
+## Note & nombre d'avis Google (mise à jour automatique)
+
+La note (4,8 ★) et le nombre d'avis (27) affichés dans la section **Avis**
+peuvent se mettre à jour tout seuls depuis la fiche Google du restaurant.
+Par défaut, ils affichent les valeurs de repli (4,8 / 27) tant que ce n'est
+pas configuré. Pour activer le direct :
+
+1. Dans la [console Google Cloud](https://console.cloud.google.com/), activez
+   **Places API (New)** et créez une **clé API** restreinte au domaine du site.
+2. Récupérez le **Place ID** de la fiche O'Bresse
+   ([Place ID Finder](https://developers.google.com/maps/documentation/places/web-service/place-id)).
+3. Dans `js/main.js`, fonction `initGoogleRating()`, renseignez :
+   ```js
+   const CONFIG = { placeId: "VOTRE_PLACE_ID", apiKey: "VOTRE_CLE_API" };
+   ```
+
+Les **6 avis affichés restent fixes** (avis réels de la fiche Google) — seuls
+la note globale et le compteur d'avis se synchronisent automatiquement.
 
 ## Stack
 

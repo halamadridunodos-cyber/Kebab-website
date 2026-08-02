@@ -327,21 +327,31 @@ body.loaded .preloader{ pointer-events:none; }
 .stat__label{ display:block; margin-top:.8rem; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted-dk); }
 
 /* =========================================================
-   SECTION 4 · CONTACT
+   SECTION 05 · CONTACT + MAPS
    ========================================================= */
 .contact{
   background:var(--bg); color:var(--paper);
   padding:clamp(5rem,12vh,10rem) var(--gutter);
   border-radius:36px 36px 0 0; margin-top:-24px; position:relative;
 }
-.contact__grid{ max-width:1400px; margin:0 auto; display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(2.5rem,6vw,6rem); }
-.contact__cta{ margin-top:2.4rem; }
-.contact__info{ display:grid; grid-template-columns:1fr 1fr; gap:2.4rem 2rem; align-content:start; padding-top:.5rem; }
+.contact__grid{ max-width:1400px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:clamp(2.5rem,5vw,5rem); align-items:stretch; }
+.contact__info{ display:grid; grid-template-columns:1fr 1fr; gap:2.2rem 2rem; align-content:start; margin-top:2.4rem; }
 .info-block__k{ font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ember); font-weight:600; }
 .info-block__v{ margin-top:.7rem; font-size:1.05rem; color:var(--paper); line-height:1.5; }
 .info-block__v a{ position:relative; }
 .info-block__v a:hover{ color:var(--ember); }
 .info-block__v.social{ display:flex; gap:1.4rem; }
+.contact__actions{ display:flex; gap:1rem; margin-top:2.4rem; flex-wrap:wrap; }
+
+/* Carte Google Maps encadrée or */
+.contact__map{
+  position:relative; min-height:420px; border-radius:8px; overflow:hidden;
+  border:1px solid rgba(224,135,46,.5);
+  box-shadow:0 30px 90px -30px rgba(0,0,0,.8);
+}
+.contact__map::after{ content:""; position:absolute; inset:0; pointer-events:none; box-shadow:inset 0 0 0 1px rgba(224,135,46,.25); border-radius:8px; }
+.contact__map iframe{ width:100%; height:100%; min-height:420px; border:0; filter:grayscale(.35) contrast(1.05); transition:filter .5s var(--ease); }
+.contact__map:hover iframe{ filter:grayscale(0) contrast(1); }
 
 /* =========================================================
    FOOTER
@@ -354,11 +364,135 @@ body.loaded .preloader{ pointer-events:none; }
   padding:2rem 0 1rem; user-select:none;
 }
 .footer__bottom{
-  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
+  display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem;
   border-top:1px solid var(--line); padding-top:1.6rem;
   font-size:.82rem; color:var(--muted);
 }
+.footer__meta{ display:flex; flex-direction:column; gap:.4rem; }
+.footer__meta a:hover{ color:var(--ember); }
+.footer__top{ white-space:nowrap; }
 .footer__top:hover{ color:var(--ember); }
+
+/* =========================================================
+   SECTION 02 · LA CARTE
+   ========================================================= */
+.carte{
+  background:var(--paper); color:var(--ink);
+  padding:clamp(5rem,12vh,10rem) var(--gutter);
+  border-radius:36px 36px 0 0; margin-top:-24px; position:relative;
+}
+.carte .section-index{ color:var(--ember-2); }
+.carte__head{ max-width:1400px; margin:0 auto clamp(2.4rem,5vh,3.6rem); }
+.carte__intro{ margin-top:1.4rem; color:var(--muted-dk); font-size:1.05rem; max-width:48ch; }
+.carte__filters{ display:flex; flex-wrap:wrap; gap:.6rem; margin-top:2.2rem; }
+.chip{
+  font-family:var(--sans); font-size:.8rem; letter-spacing:.04em; font-weight:600;
+  padding:.6rem 1.1rem; border-radius:100px; border:1px solid var(--line-dk);
+  background:transparent; color:var(--ink); cursor:none;
+  transition:background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+}
+.chip:hover{ border-color:var(--ink); }
+.chip.is-active{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+@media (hover:none){ .chip{ cursor:pointer; } }
+
+.carte__grid{
+  max-width:1400px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:1.4rem;
+  align-items:start;
+}
+.cat{
+  border:1px solid var(--line-dk); border-radius:10px; padding:1.6rem 1.5rem;
+  background:rgba(255,255,255,.4);
+  transition:transform .5s var(--ease), border-color .4s var(--ease), box-shadow .5s var(--ease);
+}
+.cat:hover{ transform:translateY(-4px); border-color:rgba(200,97,30,.55); box-shadow:0 24px 60px -34px rgba(11,10,9,.5); }
+.cat.is-hidden{ display:none; }
+.cat__head{ display:flex; align-items:baseline; justify-content:space-between; gap:1rem; margin-bottom:1rem; padding-bottom:.8rem; border-bottom:1px solid var(--line-dk); }
+.cat__head h3{ font-family:var(--serif); font-size:1.5rem; font-weight:600; }
+.cat__cols{ font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ember-2); font-weight:600; white-space:nowrap; }
+.mrow{ display:flex; align-items:baseline; justify-content:space-between; gap:.8rem; padding:.42rem 0; }
+.mrow__n{ font-size:.98rem; color:var(--ink); }
+.mrow__p{ font-family:var(--serif); font-size:1.12rem; color:var(--ember-2); white-space:nowrap; font-weight:600; }
+.mrow__p i{ font-style:normal; color:var(--muted-dk); font-size:.92rem; font-weight:400; }
+.cat__note{ font-size:.82rem; color:var(--muted-dk); margin-top:.7rem; line-height:1.45; }
+.sauces{ list-style:none; display:flex; flex-wrap:wrap; gap:.5rem; }
+.sauces li{ font-size:.82rem; padding:.34rem .7rem; border:1px solid var(--line-dk); border-radius:100px; color:var(--ink); }
+.carte__foot{ max-width:1400px; margin:2.4rem auto 0; font-size:.8rem; color:var(--muted-dk); font-style:italic; }
+
+/* =========================================================
+   SECTION 03 · LES AVIS
+   ========================================================= */
+.avis{
+  background:var(--bg); color:var(--paper);
+  padding:clamp(5rem,12vh,10rem) var(--gutter);
+  border-radius:36px 36px 0 0; margin-top:-24px; position:relative;
+}
+.avis__head{ max-width:1400px; margin:0 auto clamp(2.4rem,5vh,3.4rem); }
+
+.rating{
+  max-width:1400px; margin:0 auto clamp(2.6rem,5vh,3.4rem);
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.6rem;
+  padding:1.8rem 2rem; border:1px solid var(--line); border-radius:12px;
+  background:linear-gradient(135deg, rgba(224,135,46,.08), rgba(255,255,255,.02));
+}
+.rating__score{ display:flex; align-items:center; gap:1.4rem; }
+.rating__num{ font-family:var(--serif); font-size:clamp(3.4rem,7vw,5rem); line-height:.9; color:#fff; }
+.rating__of{ display:flex; flex-direction:column; gap:.4rem; }
+.stars{ position:relative; display:inline-block; font-size:1.4rem; line-height:1; letter-spacing:.12em; }
+.stars__base{ color:rgba(246,242,234,.24); }
+.stars__fill{ position:absolute; top:0; left:0; overflow:hidden; white-space:nowrap; color:var(--ember); }
+.rating__sub{ font-size:.92rem; color:var(--muted); }
+.rating__sub b{ color:var(--paper); }
+.rating__meta{ display:flex; flex-direction:column; align-items:flex-start; gap:.9rem; }
+.rating__badge{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ember); font-weight:600; }
+.btn--sm{ padding:.7rem 1.3rem; font-size:.74rem; }
+
+.reviews{ max-width:1400px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.4rem; }
+.review{
+  border:1px solid var(--line); border-radius:10px; padding:1.6rem 1.5rem;
+  background:var(--bg-2); display:flex; flex-direction:column; gap:1rem;
+  transition:transform .5s var(--ease), border-color .4s var(--ease);
+}
+.review:hover{ transform:translateY(-4px); border-color:rgba(224,135,46,.4); }
+.review__stars{ color:var(--ember); letter-spacing:.14em; font-size:1rem; }
+.review blockquote{ font-size:1rem; line-height:1.55; color:var(--paper); }
+.review figcaption{ display:flex; align-items:center; gap:.8rem; margin-top:auto; }
+.review__ava{
+  width:38px; height:38px; border-radius:50%; display:grid; place-items:center;
+  background:var(--ember); color:var(--ink); font-weight:700; font-size:1rem; flex-shrink:0;
+}
+.review__who{ display:flex; flex-direction:column; }
+.review__who b{ font-size:.92rem; }
+.review__who i{ font-style:normal; font-size:.76rem; color:var(--muted); }
+.avis__foot{ max-width:1400px; margin:2.2rem auto 0; font-size:.8rem; color:var(--muted); font-style:italic; }
+
+/* =========================================================
+   SECTION 04 · QUESTIONS (FAQ)
+   ========================================================= */
+.faq{
+  background:var(--paper); color:var(--ink);
+  padding:clamp(5rem,12vh,10rem) var(--gutter);
+  border-radius:36px 36px 0 0; margin-top:-24px; position:relative;
+}
+.faq .section-index{ color:var(--ember-2); }
+.faq__head{ max-width:1000px; margin:0 auto clamp(2.4rem,5vh,3.4rem); }
+.faq__list{ max-width:1000px; margin:0 auto; }
+.qa{ border-top:1px solid var(--line-dk); }
+.qa:last-child{ border-bottom:1px solid var(--line-dk); }
+.qa__q{
+  width:100%; background:none; border:0; cursor:none;
+  display:flex; align-items:center; justify-content:space-between; gap:1.5rem;
+  padding:1.5rem 0; text-align:left;
+  font-family:var(--serif); font-size:clamp(1.2rem,2.4vw,1.7rem); font-weight:500; color:var(--ink);
+}
+@media (hover:none){ .qa__q{ cursor:pointer; } }
+.qa__ic{ position:relative; width:18px; height:18px; flex-shrink:0; }
+.qa__ic::before, .qa__ic::after{ content:""; position:absolute; background:var(--ember-2); border-radius:2px; transition:transform .4s var(--ease); }
+.qa__ic::before{ top:8px; left:0; width:18px; height:2px; }
+.qa__ic::after{ left:8px; top:0; width:2px; height:18px; }
+.qa.open .qa__ic::after{ transform:scaleY(0); }
+.qa__a{ overflow:hidden; height:0; }
+.qa__a p{ padding:0 0 1.5rem; color:var(--muted-dk); font-size:1.02rem; line-height:1.6; max-width:70ch; }
 
 /* =========================================================
    REVEAL ANIMATIONS (base states — JS drives them)
@@ -373,19 +507,27 @@ body.loaded .preloader{ pointer-events:none; }
   .broche__grid{ grid-template-columns:1fr; }
   .broche__video-frame{ aspect-ratio:16/12; max-width:520px; margin:0 auto; }
   .contact__grid{ grid-template-columns:1fr; }
+  .contact__map{ min-height:340px; order:-1; }
   .stats{ grid-template-columns:repeat(2,1fr); }
+  .rating{ flex-direction:column; align-items:flex-start; }
 }
 @media (max-width:760px){
   .nav__links, .nav__cta{ display:none; }
   .nav__burger{ display:block; }
   .nav.open .nav__links{
     display:flex; position:fixed; inset:0; background:var(--bg); flex-direction:column;
-    align-items:center; justify-content:center; gap:2rem; mix-blend-mode:normal; z-index:190;
+    align-items:center; justify-content:center; gap:1.6rem; mix-blend-mode:normal; z-index:190;
   }
-  .nav.open .nav__links a{ font-family:var(--serif); font-size:2rem; color:var(--paper); }
+  .nav.open .nav__links a{ font-family:var(--serif); font-size:1.7rem; color:var(--paper); }
   .nav.open{ mix-blend-mode:normal; }
-  .hero__actions .btn{ padding:.9rem 1.5rem; font-size:.76rem; }
+  .hero__actions .btn{ padding:.9rem 1.4rem; font-size:.74rem; }
+  .contact__info{ grid-template-columns:1fr 1fr; }
+  .carte__grid{ grid-template-columns:1fr; }
+  .reviews{ grid-template-columns:1fr; }
+}
+@media (max-width:440px){
   .contact__info{ grid-template-columns:1fr; }
+  .rating__score{ gap:1rem; }
 }
 @media (max-width:420px){
   .stats{ grid-template-columns:1fr; }
@@ -447,11 +589,12 @@ body.loaded .preloader{ pointer-events:none; }
   </a>
   <nav class="nav__links" id="navLinks">
     <a href="#broche" data-cursor="Voir">La Broche</a>
-    <a href="#menu" data-cursor="Voir">Le Menu</a>
-    <a href="#maison" data-cursor="Voir">La Maison</a>
+    <a href="#carte" data-cursor="Voir">La Carte</a>
+    <a href="#avis" data-cursor="Voir">Avis</a>
+    <a href="#questions" data-cursor="Voir">Questions</a>
     <a href="#contact" data-cursor="Voir">Contact</a>
   </nav>
-  <a href="#contact" class="nav__cta" data-cursor="Réserver">Commander</a>
+  <a href="tel:+33651280674" class="nav__cta" data-cursor="Appeler">Commander</a>
   <button class="nav__burger" id="burger" aria-label="Menu"><i></i><i></i></button>
 </header>
 
@@ -474,8 +617,8 @@ body.loaded .preloader{ pointer-events:none; }
       </h1>
       <p class="hero__sub reveal-up">Le kebab, élevé au rang de savoir-faire.<br/>Notre broche est faite maison, tournée lentement à la braise.</p>
       <div class="hero__actions reveal-up">
-        <a href="#menu" class="btn btn--solid" data-cursor="Découvrir">Découvrir le menu</a>
-        <a href="#broche" class="btn btn--ghost" data-cursor="La Broche">Notre broche</a>
+        <a href="#carte" class="btn btn--solid" data-cursor="Découvrir">Découvrir la carte</a>
+        <a href="tel:+33651280674" class="btn btn--ghost" data-cursor="Appeler">06 51 28 06 74</a>
       </div>
     </div>
 
@@ -513,7 +656,7 @@ body.loaded .preloader{ pointer-events:none; }
           <li class="reveal-up"><span class="k">02</span><span class="v">Montée et tournée sur place, toute la journée</span></li>
           <li class="reveal-up"><span class="k">03</span><span class="v">Coupée à la minute, à la commande</span></li>
         </ul>
-        <a href="#menu" class="link-arrow reveal-up" data-cursor="Le Menu">Voir ce qu'on en fait <em>→</em></a>
+        <a href="#carte" class="link-arrow reveal-up" data-cursor="La Carte">Voir la carte complète <em>→</em></a>
       </div>
     </div>
 
@@ -525,101 +668,289 @@ body.loaded .preloader{ pointer-events:none; }
     </div>
   </section>
 
-  <!-- ===== SECTION 2 · LE MENU ===== -->
-  <section class="menu" id="menu">
-    <div class="menu__head">
+  <!-- ===== SECTION 02 · LA CARTE ===== -->
+  <section class="carte" id="carte">
+    <div class="carte__head">
       <span class="section-index">02 — La Carte</span>
-      <h2 class="section-title reveal-lines"><span>Ce que la broche</span><span>devient.</span></h2>
-      <p class="menu__intro reveal-up">Simple, généreux, fait maison. Pain frais, sauces maison, légumes du jour.</p>
+      <h2 class="section-title reveal-lines"><span>14 catégories,</span><span>56 produits.</span></h2>
+      <p class="carte__intro reveal-up">Sur place ou à emporter. Prix d'après la carte officielle O'Bresse.</p>
+
+      <div class="carte__filters reveal-up" id="carteFilters" role="tablist">
+        <button class="chip is-active" data-cat="all" data-cursor="Voir">Tout</button>
+        <button class="chip" data-cat="sandwichs" data-cursor="Voir">Sandwichs &amp; Plats</button>
+        <button class="chip" data-cat="grillades" data-cursor="Voir">Grillades</button>
+        <button class="chip" data-cat="box" data-cursor="Voir">Box &amp; Wings</button>
+        <button class="chip" data-cat="tasty" data-cursor="Voir">Tasty &amp; Enfant</button>
+        <button class="chip" data-cat="boissons" data-cursor="Voir">Boissons</button>
+        <button class="chip" data-cat="sauces" data-cursor="Voir">Sauces</button>
+      </div>
     </div>
 
-    <div class="menu__list">
-      <article class="dish reveal-up" data-cursor="+">
-        <div class="dish__row">
-          <h3>Le Signature</h3><span class="dish__dots"></span><span class="dish__price">9,50 €</span>
-        </div>
-        <p>Pain moelleux, veau de la broche, crudités fraîches, sauce blanche maison, oignons confits.</p>
+    <div class="carte__grid" id="carteGrid">
+
+      <article class="cat reveal-up" data-cat="sandwichs">
+        <header class="cat__head"><h3>Sandwichs</h3><span class="cat__cols">Seul · Menu</span></header>
+        <div class="mrow"><span class="mrow__n">Kebab</span><span class="mrow__p">9 € <i>/ 12 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Escalope</span><span class="mrow__p">9 € <i>/ 12 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Kofte</span><span class="mrow__p">9 € <i>/ 12 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Steak</span><span class="mrow__p">9 € <i>/ 12 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Tenders</span><span class="mrow__p">9 € <i>/ 12 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Cordon Bleu</span><span class="mrow__p">8 € <i>/ 10,50 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Adana</span><span class="mrow__p">8 € <i>/ 10,50 €</i></span></div>
       </article>
-      <article class="dish reveal-up" data-cursor="+">
-        <div class="dish__row">
-          <h3>L'Assiette Maison</h3><span class="dish__dots"></span><span class="dish__price">13,90 €</span>
-        </div>
-        <p>Généreuse portion de veau, frites maison, salade, sauce au choix. Le classique, en grand.</p>
+
+      <article class="cat reveal-up" data-cat="sandwichs">
+        <header class="cat__head"><h3>Burgers</h3><span class="cat__cols">Seul · Menu</span></header>
+        <div class="mrow"><span class="mrow__n">Cheese</span><span class="mrow__p">6 € <i>/ 9 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Double Cheese</span><span class="mrow__p">7 € <i>/ 10 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Fish</span><span class="mrow__p">6 € <i>/ 9 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Chicken</span><span class="mrow__p">6 € <i>/ 9 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Bap's</span><span class="mrow__p">7 € <i>/ 10 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Vegi</span><span class="mrow__p">6 € <i>/ 9 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Chicken Bap's</span><span class="mrow__p">7 € <i>/ 10 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Special</span><span class="mrow__p">9 € <i>/ 11,50 €</i></span></div>
       </article>
-      <article class="dish reveal-up" data-cursor="+">
-        <div class="dish__row">
-          <h3>Le Tacos O'Bresse</h3><span class="dish__dots"></span><span class="dish__price">10,50 €</span>
-        </div>
-        <p>Galette gratinée, veau, frites, sauce fromagère maison. Plié, pressé, fondant.</p>
+
+      <article class="cat reveal-up" data-cat="sandwichs">
+        <header class="cat__head"><h3>Tacos</h3><span class="cat__cols">Seul · Menu</span></header>
+        <div class="mrow"><span class="mrow__n">Tacos</span><span class="mrow__p">9,50 € <i>/ 12,50 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">Maxi Tacos</span><span class="mrow__p">12 € <i>/ 15 €</i></span></div>
+        <p class="cat__note">Supp. viande +1 € — Kebab · Escalope · Kofte · Steak · Tenders · Cordon Bleu<br/>Gratiné +1,50 € — Raclette · Cheddar · Modza · Chèvre&nbsp;Miel</p>
       </article>
-      <article class="dish reveal-up" data-cursor="+">
-        <div class="dish__row">
-          <h3>La Box du Midi</h3><span class="dish__dots"></span><span class="dish__price">11,90 €</span>
-        </div>
-        <p>Sandwich ou assiette au choix, frites maison et une boisson. Formule complète, service rapide.</p>
+
+      <article class="cat reveal-up" data-cat="sandwichs">
+        <header class="cat__head"><h3>Assiettes</h3></header>
+        <div class="mrow"><span class="mrow__n">Kebab</span><span class="mrow__p">15 €</span></div>
+        <div class="mrow"><span class="mrow__n">Escalope</span><span class="mrow__p">14 €</span></div>
+        <div class="mrow"><span class="mrow__n">Kofte</span><span class="mrow__p">14 €</span></div>
+        <div class="mrow"><span class="mrow__n">Steak</span><span class="mrow__p">14 €</span></div>
+        <div class="mrow"><span class="mrow__n">Tenders</span><span class="mrow__p">14 €</span></div>
+        <div class="mrow"><span class="mrow__n">Cordon Bleu</span><span class="mrow__p">14 €</span></div>
+        <div class="mrow"><span class="mrow__n">Royal</span><span class="mrow__p">19 €</span></div>
       </article>
-      <article class="dish reveal-up" data-cursor="+">
-        <div class="dish__row">
-          <h3>Le Végé</h3><span class="dish__dots"></span><span class="dish__price">8,90 €</span>
-        </div>
-        <p>Falafels maison, houmous, légumes grillés, sauce herbes fraîches. Sans compromis sur le goût.</p>
+
+      <article class="cat reveal-up" data-cat="grillades">
+        <header class="cat__head"><h3>Grillades</h3></header>
+        <div class="mrow"><span class="mrow__n">Côtelettes</span><span class="mrow__p">18 €</span></div>
+        <div class="mrow"><span class="mrow__n">Beyti Adana ou Brochette</span><span class="mrow__p">17 €</span></div>
+        <div class="mrow"><span class="mrow__n">Adana</span><span class="mrow__p">16 €</span></div>
+        <div class="mrow"><span class="mrow__n">Aile de Poulet</span><span class="mrow__p">16 €</span></div>
+        <div class="mrow"><span class="mrow__n">Iskender</span><span class="mrow__p">16 €</span></div>
       </article>
-      <article class="dish reveal-up" data-cursor="+">
-        <div class="dish__row">
-          <h3>Desserts &amp; Boissons</h3><span class="dish__dots"></span><span class="dish__price">dès 2,50 €</span>
-        </div>
-        <p>Baklava maison, tiramisu, boissons fraîches et thé à la menthe.</p>
+
+      <article class="cat reveal-up" data-cat="box">
+        <header class="cat__head"><h3>Accompagnement &amp; Box</h3></header>
+        <div class="mrow"><span class="mrow__n">4 Oignon Rings</span><span class="mrow__p">3 €</span></div>
+        <div class="mrow"><span class="mrow__n">8 Oignon Rings</span><span class="mrow__p">6 €</span></div>
+        <div class="mrow"><span class="mrow__n">4 Modza Stick</span><span class="mrow__p">3 €</span></div>
+        <div class="mrow"><span class="mrow__n">8 Modza Stick</span><span class="mrow__p">6 €</span></div>
+        <div class="mrow"><span class="mrow__n">4 Nuggets</span><span class="mrow__p">3 €</span></div>
+        <div class="mrow"><span class="mrow__n">4 Chili Cheese</span><span class="mrow__p">3 €</span></div>
       </article>
+
+      <article class="cat reveal-up" data-cat="box">
+        <header class="cat__head"><h3>Mixte</h3></header>
+        <div class="mrow"><span class="mrow__n">3 Tenders / 4 Wings</span><span class="mrow__p">10 €</span></div>
+        <div class="mrow"><span class="mrow__n">6 Tenders / 8 Wings</span><span class="mrow__p">18 €</span></div>
+        <div class="mrow"><span class="mrow__n">9 Tenders / 12 Wings</span><span class="mrow__p">25 €</span></div>
+        <div class="mrow"><span class="mrow__n">12 Tenders / 16 Wings</span><span class="mrow__p">32 €</span></div>
+      </article>
+
+      <article class="cat reveal-up" data-cat="box">
+        <header class="cat__head"><h3>Wings</h3></header>
+        <div class="mrow"><span class="mrow__n">8 Wings</span><span class="mrow__p">10 €</span></div>
+        <div class="mrow"><span class="mrow__n">16 Wings</span><span class="mrow__p">16 €</span></div>
+        <div class="mrow"><span class="mrow__n">24 Wings</span><span class="mrow__p">24 €</span></div>
+        <div class="mrow"><span class="mrow__n">32 Wings</span><span class="mrow__p">32 €</span></div>
+      </article>
+
+      <article class="cat reveal-up" data-cat="box">
+        <header class="cat__head"><h3>Tenders</h3></header>
+        <div class="mrow"><span class="mrow__n">6 Tenders</span><span class="mrow__p">10 €</span></div>
+        <div class="mrow"><span class="mrow__n">12 Tenders</span><span class="mrow__p">16 €</span></div>
+        <div class="mrow"><span class="mrow__n">18 Tenders</span><span class="mrow__p">24 €</span></div>
+        <div class="mrow"><span class="mrow__n">24 Tenders</span><span class="mrow__p">32 €</span></div>
+      </article>
+
+      <article class="cat reveal-up" data-cat="tasty">
+        <header class="cat__head"><h3>Tasty</h3><span class="cat__cols">Seul · Menu</span></header>
+        <div class="mrow"><span class="mrow__n">Tasty</span><span class="mrow__p">9,50 € <i>/ 12,50 €</i></span></div>
+      </article>
+
+      <article class="cat reveal-up" data-cat="tasty">
+        <header class="cat__head"><h3>Menu Enfant</h3></header>
+        <div class="mrow"><span class="mrow__n">Kebab</span><span class="mrow__p">7 €</span></div>
+        <div class="mrow"><span class="mrow__n">Burger</span><span class="mrow__p">7 €</span></div>
+        <div class="mrow"><span class="mrow__n">Tenders</span><span class="mrow__p">7 €</span></div>
+        <div class="mrow"><span class="mrow__n">Nuggets</span><span class="mrow__p">7 €</span></div>
+        <p class="cat__note">Servi avec frites, une boisson et un jouet.</p>
+      </article>
+
+      <article class="cat reveal-up" data-cat="boissons">
+        <header class="cat__head"><h3>Boissons</h3></header>
+        <div class="mrow"><span class="mrow__n">Canette 33 cl</span><span class="mrow__p">2 €</span></div>
+        <div class="mrow"><span class="mrow__n">Bouteille 1,5 L</span><span class="mrow__p">3,50 €</span></div>
+        <div class="mrow"><span class="mrow__n">Eau 50 cl</span><span class="mrow__p">1,50 €</span></div>
+        <div class="mrow"><span class="mrow__n">Café</span><span class="mrow__p">1,80 €</span></div>
+      </article>
+
+      <article class="cat reveal-up" data-cat="boissons">
+        <header class="cat__head"><h3>Dessert</h3></header>
+        <p class="cat__note">Desserts du jour — demandez en caisse.</p>
+      </article>
+
+      <article class="cat reveal-up" data-cat="sauces">
+        <header class="cat__head"><h3>Suppléments</h3></header>
+        <div class="mrow"><span class="mrow__n">Supp. viande</span><span class="mrow__p">+1 €</span></div>
+        <p class="cat__note">Kebab · Escalope · Kofte · Steak · Tenders · Cordon Bleu</p>
+        <div class="mrow"><span class="mrow__n">Gratiné</span><span class="mrow__p">+1,50 €</span></div>
+        <p class="cat__note">Raclette · Cheddar · Mozza · Chèvre Miel</p>
+      </article>
+
+      <article class="cat cat--sauces reveal-up" data-cat="sauces">
+        <header class="cat__head"><h3>Nos sauces</h3><span class="cat__cols">15 sauces</span></header>
+        <ul class="sauces">
+          <li>Blanche</li><li>Harissa</li><li>Samouraï</li><li>Algérienne</li><li>Andalouse</li>
+          <li>Ketchup</li><li>Mayonnaise</li><li>Moutarde</li><li>Barbecue</li><li>Burger</li>
+          <li>Curry</li><li>Chili Thaï</li><li>Biggy Burger</li><li>Marocaine</li><li>Américaine</li>
+        </ul>
+      </article>
+
+    </div>
+    <p class="carte__foot reveal-up">Prix d'après la carte officielle O'Bresse. Sous réserve de modification en magasin.</p>
+  </section>
+
+  <!-- ===== SECTION 03 · LES AVIS ===== -->
+  <section class="avis" id="avis">
+    <div class="avis__head">
+      <span class="section-index">03 — Les Avis</span>
+      <h2 class="section-title reveal-lines"><span>Ils en</span><span>parlent.</span></h2>
+    </div>
+
+    <!-- Bandeau note Google : note + étoiles + nombre d'avis mis à jour automatiquement -->
+    <div class="rating reveal-up">
+      <div class="rating__score">
+        <span class="rating__num" id="gNote" data-fallback="4.8">4,8</span>
+        <div class="rating__of">
+          <div class="stars" id="gStars" aria-hidden="true">
+            <div class="stars__base">★★★★★</div>
+            <div class="stars__fill" id="gStarsFill" style="width:96%">★★★★★</div>
+          </div>
+          <span class="rating__sub">sur 5 · <b id="gCount" data-fallback="27">27</b> avis sur Google</span>
+        </div>
+      </div>
+      <div class="rating__meta">
+        <span class="rating__badge">Note Google vérifiée · Montréal-la-Cluse</span>
+        <a class="btn btn--ghost btn--sm" href="https://www.google.com/maps?q=Restaurant+O'Bresse,2+Av.+de+Bresse,01460+Montr%C3%A9al-la-Cluse" target="_blank" rel="noopener" data-cursor="Google">Voir sur Google</a>
+      </div>
+    </div>
+
+    <div class="reviews">
+      <figure class="review reveal-up">
+        <div class="review__stars">★★★★★</div>
+        <blockquote>Excellent ! Un kebab 100% veau fait maison qui est très bon. Le restaurant est très propre avec un beau décor, je recommande fortement avec un accueil chaleureux.</blockquote>
+        <figcaption><span class="review__ava">M</span><span class="review__who"><b>Musa Isiksoy</b><i>il y a 2 semaines · Google</i></span></figcaption>
+      </figure>
+      <figure class="review reveal-up">
+        <div class="review__stars">★★★★★</div>
+        <blockquote>Contente d'avoir ce genre de restaurant dans le coin avec une broche maison 100% veau !</blockquote>
+        <figcaption><span class="review__ava">J</span><span class="review__who"><b>Jülide Şen</b><i>il y a 2 semaines · Google</i></span></figcaption>
+      </figure>
+      <figure class="review reveal-up">
+        <div class="review__stars">★★★★★</div>
+        <blockquote>Incroyable ! C'est super bon, le kebab est excellent, bon accueil. Bref, foncez si vous voulez bien manger.</blockquote>
+        <figcaption><span class="review__ava">I</span><span class="review__who"><b>Ines Boudabban</b><i>il y a 2 semaines · Google</i></span></figcaption>
+      </figure>
+      <figure class="review reveal-up">
+        <div class="review__stars">★★★★★</div>
+        <blockquote>Viande de qualité faite 100% maison au veau, personnel accueillant et à l'écoute, ainsi que des prix très abordables. Une très bonne adresse à découvrir.</blockquote>
+        <figcaption><span class="review__ava">G</span><span class="review__who"><b>Géraldine Chêne</b><i>il y a 1 semaine · Google</i></span></figcaption>
+      </figure>
+      <figure class="review reveal-up">
+        <div class="review__stars">★★★★★</div>
+        <blockquote>Accueil, personnel, nourriture : excellent ! Le goût des viandes est vraiment exceptionnel. Recommande fortement.</blockquote>
+        <figcaption><span class="review__ava">H</span><span class="review__who"><b>Huseyin Cengiz</b><i>il y a 2 semaines · Google</i></span></figcaption>
+      </figure>
+      <figure class="review reveal-up">
+        <div class="review__stars">★★★★★</div>
+        <blockquote>La viande est excellente, elle est faite maison. Si vous voulez manger un bon kebab de veau, n'hésitez pas, foncez !!!</blockquote>
+        <figcaption><span class="review__ava">K</span><span class="review__who"><b>Keziban Gulsever</b><i>il y a 1 semaine · Google</i></span></figcaption>
+      </figure>
+    </div>
+    <p class="avis__foot reveal-up">Avis réels publiés sur la fiche Google d'O'Bresse. Aucun avis n'est inventé ni modifié.</p>
+  </section>
+
+  <!-- ===== SECTION 04 · QUESTIONS ===== -->
+  <section class="faq" id="questions">
+    <div class="faq__head">
+      <span class="section-index">04 — Questions</span>
+      <h2 class="section-title reveal-lines"><span>Tout ce qu'il</span><span>faut savoir.</span></h2>
+    </div>
+
+    <div class="faq__list" id="faqList">
+      <div class="qa reveal-up">
+        <button class="qa__q" data-cursor="+"><span>La viande est-elle vraiment faite maison ?</span><i class="qa__ic"></i></button>
+        <div class="qa__a"><p>Oui. La broche est montée à la main dans le restaurant, couche par couche, 100 % veau. Elle rôtit progressivement devant la source de chaleur et n'est tranchée qu'au moment de la commande.</p></div>
+      </div>
+      <div class="qa reveal-up">
+        <button class="qa__q" data-cursor="+"><span>La viande est-elle halal ?</span><i class="qa__ic"></i></button>
+        <div class="qa__a"><p>Oui, la viande est 100 % halal.</p></div>
+      </div>
+      <div class="qa reveal-up">
+        <button class="qa__q" data-cursor="+"><span>Quels sont vos horaires ?</span><i class="qa__ic"></i></button>
+        <div class="qa__a"><p>Nous sommes ouverts tous les jours (7j/7) de 11h à 14h et de 17h30 à 23h.</p></div>
+      </div>
+      <div class="qa reveal-up">
+        <button class="qa__q" data-cursor="+"><span>Peut-on commander à emporter ?</span><i class="qa__ic"></i></button>
+        <div class="qa__a"><p>Oui, sur place ou à emporter. Appelez-nous pour préparer votre commande à l'avance et éviter l'attente.</p></div>
+      </div>
+      <div class="qa reveal-up">
+        <button class="qa__q" data-cursor="+"><span>Proposez-vous des menus enfant ?</span><i class="qa__ic"></i></button>
+        <div class="qa__a"><p>Oui, à 7 € : kebab, burger, tenders ou nuggets, servis avec frites, une boisson et un jouet.</p></div>
+      </div>
     </div>
   </section>
 
-  <!-- ===== SECTION 3 · LA MAISON ===== -->
-  <section class="maison" id="maison">
-    <div class="maison__intro">
-      <span class="section-index">03 — La Maison</span>
-      <h2 class="section-title reveal-lines"><span>Un kebab,</span><span>une exigence.</span></h2>
-      <p class="reveal-up">O'Bresse est née d'une conviction simple&nbsp;: la street-food mérite les mêmes égards qu'un bon restaurant. Produits frais, tout est préparé sur place, chaque jour, sans raccourci.</p>
-      <p class="reveal-up">Ici, la broche n'est pas un produit qu'on décongèle&nbsp;: c'est une pièce qu'on monte, qu'on assaisonne et qu'on surveille. Le reste suit&nbsp;: du pain frais, des sauces maison et un accueil qui donne envie de revenir.</p>
-    </div>
-
-    <div class="stats">
-      <div class="stat reveal-up"><span class="stat__num" data-count="100">0</span><span class="stat__unit">%</span><span class="stat__label">Veau</span></div>
-      <div class="stat reveal-up"><span class="stat__num" data-count="100">0</span><span class="stat__unit">%</span><span class="stat__label">Fait maison</span></div>
-      <div class="stat reveal-up"><span class="stat__num" data-count="7">0</span><span class="stat__unit">j/7</span><span class="stat__label">À vos côtés</span></div>
-      <div class="stat reveal-up"><span class="stat__num" data-count="0">0</span><span class="stat__unit">%</span><span class="stat__label">Surgelé</span></div>
-    </div>
-  </section>
-
-  <!-- ===== SECTION 4 · CONTACT ===== -->
+  <!-- ===== SECTION 05 · CONTACT + MAPS ===== -->
   <section class="contact" id="contact">
     <div class="contact__grid">
       <div class="contact__col">
-        <span class="section-index">04 — Nous trouver</span>
-        <h2 class="section-title reveal-lines"><span>Passez</span><span>nous voir.</span></h2>
-        <a href="#" class="btn btn--solid contact__cta reveal-up" data-cursor="C'est parti">Commander en ligne</a>
+        <span class="section-index">05 — Passez nous voir</span>
+        <h2 class="section-title reveal-lines"><span>Sur place ou</span><span>à emporter.</span></h2>
+
+        <div class="contact__info">
+          <div class="info-block reveal-up">
+            <span class="info-block__k">Adresse</span>
+            <p class="info-block__v">2 Av. de Bresse<br/>01460 Montréal-la-Cluse</p>
+          </div>
+          <div class="info-block reveal-up">
+            <span class="info-block__k">Horaires</span>
+            <p class="info-block__v">7j/7 · 11h – 14h<br/>&amp; 17h30 – 23h</p>
+          </div>
+          <div class="info-block reveal-up">
+            <span class="info-block__k">Téléphone</span>
+            <p class="info-block__v"><a href="tel:+33651280674" data-cursor="Appeler">+33 6 51 28 06 74</a></p>
+          </div>
+          <div class="info-block reveal-up">
+            <span class="info-block__k">Suivez-nous</span>
+            <p class="info-block__v social">
+              <a href="https://www.instagram.com/obresse01?igsh=djhteGw5cDdmY3Jk" target="_blank" rel="noopener" data-cursor="Instagram">Instagram</a>
+              <a href="https://www.tiktok.com/@obresse2?_r=1&amp;_t=ZN-98AOft6U2Tu" target="_blank" rel="noopener" data-cursor="TikTok">TikTok</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="contact__actions reveal-up">
+          <a href="tel:+33651280674" class="btn btn--solid" data-cursor="Appeler">Appeler</a>
+          <a href="https://www.google.com/maps?q=Restaurant+O'Bresse,2+Av.+de+Bresse,01460+Montr%C3%A9al-la-Cluse" target="_blank" rel="noopener" class="btn btn--ghost" data-cursor="Y aller">Itinéraire</a>
+        </div>
       </div>
 
-      <div class="contact__info">
-        <!-- ⚙️ À personnaliser : adresse, téléphone et horaires réels du restaurant -->
-        <div class="info-block reveal-up">
-          <span class="info-block__k">Adresse</span>
-          <p class="info-block__v">Centre commercial — <br/>À compléter avec votre adresse</p>
-        </div>
-        <div class="info-block reveal-up">
-          <span class="info-block__k">Téléphone</span>
-          <p class="info-block__v"><a href="tel:+33000000000" data-cursor="Appeler">+33 (0)0 00 00 00 00</a></p>
-        </div>
-        <div class="info-block reveal-up">
-          <span class="info-block__k">Horaires</span>
-          <p class="info-block__v">Lun – Sam · 11h30 – 14h30 / 18h30 – 22h30<br/>Dimanche · 18h30 – 22h30</p>
-        </div>
-        <div class="info-block reveal-up">
-          <span class="info-block__k">Suivez-nous</span>
-          <p class="info-block__v social">
-            <a href="#" data-cursor="Instagram">Instagram</a>
-            <a href="#" data-cursor="Facebook">Facebook</a>
-          </p>
-        </div>
+      <div class="contact__map reveal-up" data-cursor="Google Maps">
+        <iframe
+          title="Localisation du restaurant O'Bresse sur Google Maps"
+          src="https://www.google.com/maps?q=Restaurant+O'Bresse,2+Av.+de+Bresse,01460+Montr%C3%A9al-la-Cluse&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       </div>
     </div>
   </section>
@@ -628,7 +959,11 @@ body.loaded .preloader{ pointer-events:none; }
   <footer class="footer">
     <div class="footer__big" aria-hidden="true">O'Bresse</div>
     <div class="footer__bottom">
-      <span>© <span id="year"></span> O'Bresse — Broche Maison 100% Veau</span>
+      <div class="footer__meta">
+        <span>2 Av. de Bresse, 01460 Montréal-la-Cluse · <a href="tel:+33651280674" data-cursor="Appeler">+33 6 51 28 06 74</a></span>
+        <span>7j/7 · 11h–14h &amp; 17h30–23h · Snack · Fast-food · Broche maison 100% veau · Halal</span>
+        <span>© <span id="year"></span> O'Bresse — Tous droits réservés</span>
+      </div>
       <a href="#accueil" class="footer__top" data-cursor="Haut">Retour en haut ↑</a>
     </div>
   </footer>
@@ -908,6 +1243,108 @@ var k="1.1.14";function w(r,t,e){return Math.max(r,Math.min(t,e))}function _(r,t
   }
 
   /* =========================================================
+     CARTE — filtres par catégorie
+     ========================================================= */
+  function initCarteFilter() {
+    const filters = document.getElementById("carteFilters");
+    if (!filters) return;
+    const cats = gsap.utils.toArray(".cat");
+    filters.addEventListener("click", (e) => {
+      const btn = e.target.closest(".chip");
+      if (!btn) return;
+      filters.querySelectorAll(".chip").forEach((c) => c.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const cat = btn.dataset.cat;
+      cats.forEach((c) => {
+        const show = cat === "all" || c.dataset.cat === cat;
+        c.classList.toggle("is-hidden", !show);
+        if (show) { gsap.fromTo(c, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }); }
+      });
+      ScrollTrigger.refresh();
+    });
+  }
+
+  /* =========================================================
+     FAQ — accordéon
+     ========================================================= */
+  function initFaq() {
+    gsap.utils.toArray(".qa").forEach((qa) => {
+      const btn = qa.querySelector(".qa__q");
+      const ans = qa.querySelector(".qa__a");
+      btn.addEventListener("click", () => {
+        const isOpen = qa.classList.contains("open");
+        document.querySelectorAll(".qa.open").forEach((o) => {
+          if (o !== qa) { o.classList.remove("open"); gsap.to(o.querySelector(".qa__a"), { height: 0, duration: 0.4, ease: "power2.inOut" }); }
+        });
+        if (isOpen) {
+          qa.classList.remove("open");
+          gsap.to(ans, { height: 0, duration: 0.4, ease: "power2.inOut" });
+        } else {
+          qa.classList.add("open");
+          gsap.set(ans, { height: "auto" });
+          gsap.from(ans, { height: 0, duration: 0.45, ease: "power2.out" });
+        }
+      });
+    });
+  }
+
+  /* =========================================================
+     AVIS GOOGLE — note + nombre d'avis mis à jour automatiquement
+     -----------------------------------------------------------
+     ⚙️  Pour activer la mise à jour en direct depuis Google :
+        1. Créez une clé « Places API (New) » (console Google Cloud),
+           restreinte au domaine de votre site.
+        2. Récupérez le Place ID de la fiche O'Bresse.
+        3. Renseignez CONFIG.placeId et CONFIG.apiKey ci-dessous.
+     Sans configuration (ou en cas d'échec réseau), les valeurs de
+     repli affichées restent 4,8 ★ et 27 avis.
+     ========================================================= */
+  function initGoogleRating() {
+    const CONFIG = { placeId: "", apiKey: "" };
+
+    const noteEl = document.getElementById("gNote");
+    const countEl = document.getElementById("gCount");
+    const fillEl = document.getElementById("gStarsFill");
+    if (!noteEl || !countEl || !fillEl) return;
+
+    const fr = (n) => String(n).replace(".", ",");
+    const setStars = (rating) => { fillEl.style.width = Math.max(0, Math.min(100, (rating / 5) * 100)) + "%"; };
+
+    const fbNote = parseFloat(noteEl.dataset.fallback || "4.8");
+    const fbCount = parseInt(countEl.dataset.fallback || "27", 10);
+
+    function render(rating, count, animate) {
+      setStars(rating);
+      if (animate && !prefersReduced) {
+        const a = { v: 0 }, b = { v: 0 };
+        gsap.to(a, { v: rating, duration: 1.4, ease: "power2.out", onUpdate: () => (noteEl.textContent = fr(a.v.toFixed(1))) });
+        gsap.to(b, { v: count, duration: 1.6, ease: "power2.out", onUpdate: () => (countEl.textContent = Math.round(b.v)) });
+      } else {
+        noteEl.textContent = fr(rating.toFixed(1));
+        countEl.textContent = count;
+      }
+    }
+
+    setStars(fbNote);
+    // Anime les valeurs de repli quand le bandeau entre dans le viewport
+    ScrollTrigger.create({ trigger: ".rating", start: "top 88%", once: true, onEnter: () => render(fbNote, fbCount, true) });
+
+    // Tentative de mise à jour en direct (Places API New)
+    if (CONFIG.placeId && CONFIG.apiKey) {
+      fetch(`https://places.googleapis.com/v1/places/${CONFIG.placeId}`, {
+        headers: { "X-Goog-Api-Key": CONFIG.apiKey, "X-Goog-FieldMask": "rating,userRatingCount" },
+      })
+        .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+        .then((d) => {
+          if (typeof d.rating === "number" && typeof d.userRatingCount === "number") {
+            render(d.rating, d.userRatingCount, true);
+          }
+        })
+        .catch(() => { /* conserve le repli 4,8 / 27 */ });
+    }
+  }
+
+  /* =========================================================
      BOOT
      ========================================================= */
   window.addEventListener("DOMContentLoaded", () => {
@@ -917,6 +1354,9 @@ var k="1.1.14";function w(r,t,e){return Math.max(r,Math.min(t,e))}function _(r,t
     initReveals();
     initCounters();
     initEmbers();
+    initCarteFilter();
+    initFaq();
+    initGoogleRating();
 
     if (prefersReduced) {
       document.body.classList.add("loaded");
