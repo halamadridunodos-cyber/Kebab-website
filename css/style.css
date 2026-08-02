@@ -151,8 +151,11 @@ body.loaded .preloader{ pointer-events:none; }
 }
 .hero__media{ position:absolute; inset:0; z-index:-1; }
 .hero__img{
-  width:100%; height:120%; object-fit:cover; object-position:center 30%;
-  will-change:transform;
+  position:absolute; inset:0;
+  background:url("../assets/enseigne.png") no-repeat;
+  background-size:cover;
+  background-position:50% 42%;   /* montre l'enseigne + la vitrine au repos */
+  will-change:background-position;
 }
 .hero__scrim{
   position:absolute; inset:0;

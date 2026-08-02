@@ -63,12 +63,15 @@
     tl.to(".hero__title .word > span", { y: 0, duration: 1, stagger: 0.06 })
       .to(".hero .reveal-up", { opacity: 1, y: 0, duration: 0.9, stagger: 0.12 }, "-=0.6");
 
-    // Parallax on hero image
+    // Scroll pan : révèle la devanture complète (enseigne → vitrine → terrasse)
     if (!prefersReduced) {
-      gsap.to("#heroImg", {
-        yPercent: 18, ease: "none",
-        scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
-      });
+      gsap.fromTo("#heroImg",
+        { backgroundPositionY: "42%" },
+        {
+          backgroundPositionY: "88%", ease: "none",
+          scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true },
+        }
+      );
     }
   }
 
