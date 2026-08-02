@@ -13,6 +13,9 @@
 </head>
 <body>
 
+<!-- ===== SCROLL PROGRESS ===== -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
 <!-- ===== PRELOADER ===== -->
 <div class="preloader" id="preloader">
   <div class="preloader__inner">
@@ -97,16 +100,17 @@
     </a>
   </section>
 
-  <!-- ===== SECTION 1 · LA BROCHE (vidéo en boucle) ===== -->
+  <!-- ===== SECTION 01 · LA BROCHE (vidéo en boucle) ===== -->
   <section class="broche" id="broche">
-    <canvas class="embers" id="embers" aria-hidden="true"></canvas>
-
     <div class="broche__head">
-      <span class="section-index">01 — La Broche</span>
-      <h2 class="section-title reveal-lines">
-        <span>Tournée à la braise,</span>
-        <span>faite maison.</span>
-      </h2>
+      <div>
+        <span class="section-index">01 — La Broche</span>
+        <h2 class="section-title reveal-lines">
+          <span>Tournée à la braise,</span>
+          <span>faite maison.</span>
+        </h2>
+      </div>
+      <p class="broche__lead-in reveal-up">Le savoir-faire qui fait toute la différence — visible, à toute heure, derrière notre comptoir.</p>
     </div>
 
     <div class="broche__grid">
@@ -119,11 +123,12 @@
       </figure>
 
       <div class="broche__text">
-        <p class="lead reveal-up">Chaque matin, nous montons notre broche à la main. Des tranches de <strong>veau</strong> sélectionnées, marinées, empilées puis saisies lentement sur la braise jusqu'à obtenir cette croûte dorée et ce cœur fondant.</p>
-        <ul class="broche__facts">
-          <li class="reveal-up"><span class="k">01</span><span class="v">100% veau, sélectionné et mariné maison</span></li>
-          <li class="reveal-up"><span class="k">02</span><span class="v">Montée et tournée sur place, toute la journée</span></li>
-          <li class="reveal-up"><span class="k">03</span><span class="v">Coupée à la minute, à la commande</span></li>
+        <p class="broche__kicker reveal-up">Montée main · rôtie devant la flamme</p>
+        <p class="lead reveal-up">Chaque matin, nous empilons notre broche à la main, couche après couche. Du <strong>veau</strong> sélectionné et mariné maison, rôti lentement devant la source de chaleur&nbsp;: l'extérieur caramélise, le cœur reste tendre. Puis on tranche, à la minute.</p>
+        <ul class="spec">
+          <li class="reveal-up"><span class="spec__k">Le veau</span><span class="spec__v">100 % veau, sélectionné et mariné maison.</span></li>
+          <li class="reveal-up"><span class="spec__k">La cuisson</span><span class="spec__v">Montée à la main, rôtie sur place toute la journée.</span></li>
+          <li class="reveal-up"><span class="spec__k">La coupe</span><span class="spec__v">Tranchée à la minute, uniquement à la commande.</span></li>
         </ul>
         <a href="#carte" class="link-arrow reveal-up" data-cursor="La Carte">Voir la carte complète <em>→</em></a>
       </div>
@@ -131,8 +136,8 @@
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>Broche Maison</span><span class="dot">•</span><span>100% Veau</span><span class="dot">•</span><span>Fait Maison</span><span class="dot">•</span><span>À la Braise</span><span class="dot">•</span>
-        <span>Broche Maison</span><span class="dot">•</span><span>100% Veau</span><span class="dot">•</span><span>Fait Maison</span><span class="dot">•</span><span>À la Braise</span><span class="dot">•</span>
+        <span>Broche Maison</span><span class="dot">◆</span><span>100% Veau</span><span class="dot">◆</span><span>Halal</span><span class="dot">◆</span><span>Tranchée à la minute</span><span class="dot">◆</span><span>Rôtie à la flamme</span><span class="dot">◆</span>
+        <span>Broche Maison</span><span class="dot">◆</span><span>100% Veau</span><span class="dot">◆</span><span>Halal</span><span class="dot">◆</span><span>Tranchée à la minute</span><span class="dot">◆</span><span>Rôtie à la flamme</span><span class="dot">◆</span>
       </div>
     </div>
   </section>
@@ -158,7 +163,7 @@
     <div class="carte__grid" id="carteGrid">
 
       <article class="cat reveal-up" data-cat="sandwichs">
-        <header class="cat__head"><h3>Sandwichs</h3><span class="cat__cols">Seul · Menu</span></header>
+        <header class="cat__head"><h3>Sandwichs &amp; Galettes</h3><span class="cat__cols">Seul · Menu</span></header>
         <div class="mrow"><span class="mrow__n">Kebab</span><span class="mrow__p">9 € <i>/ 12 €</i></span></div>
         <div class="mrow"><span class="mrow__n">Escalope</span><span class="mrow__p">9 € <i>/ 12 €</i></span></div>
         <div class="mrow"><span class="mrow__n">Kofte</span><span class="mrow__p">9 € <i>/ 12 €</i></span></div>
@@ -166,6 +171,7 @@
         <div class="mrow"><span class="mrow__n">Tenders</span><span class="mrow__p">9 € <i>/ 12 €</i></span></div>
         <div class="mrow"><span class="mrow__n">Cordon Bleu</span><span class="mrow__p">8 € <i>/ 10,50 €</i></span></div>
         <div class="mrow"><span class="mrow__n">Adana</span><span class="mrow__p">8 € <i>/ 10,50 €</i></span></div>
+        <p class="cat__note">Servis avec crudités et sauces au choix. Frites incluses pour les galettes.</p>
       </article>
 
       <article class="cat reveal-up" data-cat="sandwichs">
@@ -178,13 +184,14 @@
         <div class="mrow"><span class="mrow__n">Vegi</span><span class="mrow__p">6 € <i>/ 9 €</i></span></div>
         <div class="mrow"><span class="mrow__n">Chicken Bap's</span><span class="mrow__p">7 € <i>/ 10 €</i></span></div>
         <div class="mrow"><span class="mrow__n">Special</span><span class="mrow__p">9 € <i>/ 11,50 €</i></span></div>
+        <p class="cat__note">Servis avec crudités et sauces au choix.</p>
       </article>
 
       <article class="cat reveal-up" data-cat="sandwichs">
         <header class="cat__head"><h3>Tacos</h3><span class="cat__cols">Seul · Menu</span></header>
         <div class="mrow"><span class="mrow__n">Tacos</span><span class="mrow__p">9,50 € <i>/ 12,50 €</i></span></div>
         <div class="mrow"><span class="mrow__n">Maxi Tacos</span><span class="mrow__p">12 € <i>/ 15 €</i></span></div>
-        <p class="cat__note">Supp. viande +1 € — Kebab · Escalope · Kofte · Steak · Tenders · Cordon Bleu<br/>Gratiné +1,50 € — Raclette · Cheddar · Modza · Chèvre&nbsp;Miel</p>
+        <p class="cat__note">Viande au choix, crudités et sauces — sauce gruyère incluse. Supplément viande +1 €.</p>
       </article>
 
       <article class="cat reveal-up" data-cat="sandwichs">
@@ -196,6 +203,7 @@
         <div class="mrow"><span class="mrow__n">Tenders</span><span class="mrow__p">14 €</span></div>
         <div class="mrow"><span class="mrow__n">Cordon Bleu</span><span class="mrow__p">14 €</span></div>
         <div class="mrow"><span class="mrow__n">Royal</span><span class="mrow__p">19 €</span></div>
+        <p class="cat__note">Servies avec frites, riz, boulgour — ou deux au choix.</p>
       </article>
 
       <article class="cat reveal-up" data-cat="grillades">
@@ -205,6 +213,7 @@
         <div class="mrow"><span class="mrow__n">Adana</span><span class="mrow__p">16 €</span></div>
         <div class="mrow"><span class="mrow__n">Aile de Poulet</span><span class="mrow__p">16 €</span></div>
         <div class="mrow"><span class="mrow__n">Iskender</span><span class="mrow__p">16 €</span></div>
+        <p class="cat__note">Servies avec crudités et sauces au choix.</p>
       </article>
 
       <article class="cat reveal-up" data-cat="box">
@@ -217,28 +226,13 @@
         <div class="mrow"><span class="mrow__n">4 Chili Cheese</span><span class="mrow__p">3 €</span></div>
       </article>
 
-      <article class="cat reveal-up" data-cat="box">
-        <header class="cat__head"><h3>Mixte</h3></header>
-        <div class="mrow"><span class="mrow__n">3 Tenders / 4 Wings</span><span class="mrow__p">10 €</span></div>
-        <div class="mrow"><span class="mrow__n">6 Tenders / 8 Wings</span><span class="mrow__p">18 €</span></div>
-        <div class="mrow"><span class="mrow__n">9 Tenders / 12 Wings</span><span class="mrow__p">25 €</span></div>
-        <div class="mrow"><span class="mrow__n">12 Tenders / 16 Wings</span><span class="mrow__p">32 €</span></div>
-      </article>
-
-      <article class="cat reveal-up" data-cat="box">
-        <header class="cat__head"><h3>Wings</h3></header>
-        <div class="mrow"><span class="mrow__n">8 Wings</span><span class="mrow__p">10 €</span></div>
-        <div class="mrow"><span class="mrow__n">16 Wings</span><span class="mrow__p">16 €</span></div>
-        <div class="mrow"><span class="mrow__n">24 Wings</span><span class="mrow__p">24 €</span></div>
-        <div class="mrow"><span class="mrow__n">32 Wings</span><span class="mrow__p">32 €</span></div>
-      </article>
-
-      <article class="cat reveal-up" data-cat="box">
-        <header class="cat__head"><h3>Tenders</h3></header>
-        <div class="mrow"><span class="mrow__n">6 Tenders</span><span class="mrow__p">10 €</span></div>
-        <div class="mrow"><span class="mrow__n">12 Tenders</span><span class="mrow__p">16 €</span></div>
-        <div class="mrow"><span class="mrow__n">18 Tenders</span><span class="mrow__p">24 €</span></div>
-        <div class="mrow"><span class="mrow__n">24 Tenders</span><span class="mrow__p">32 €</span></div>
+      <article class="cat cat--wide reveal-up" data-cat="box">
+        <header class="cat__head"><h3>Wings · Tenders · Mixte</h3><span class="cat__cols">Une portion, trois façons</span></header>
+        <div class="mrow"><span class="mrow__n">8 Wings &nbsp;·&nbsp; 6 Tenders &nbsp;·&nbsp; 3 Tenders + 4 Wings</span><span class="mrow__p">10 €</span></div>
+        <div class="mrow"><span class="mrow__n">16 Wings &nbsp;·&nbsp; 12 Tenders &nbsp;·&nbsp; 6 Tenders + 8 Wings</span><span class="mrow__p">16 € <i>· mixte 18 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">24 Wings &nbsp;·&nbsp; 18 Tenders &nbsp;·&nbsp; 9 Tenders + 12 Wings</span><span class="mrow__p">24 € <i>· mixte 25 €</i></span></div>
+        <div class="mrow"><span class="mrow__n">32 Wings &nbsp;·&nbsp; 24 Tenders &nbsp;·&nbsp; 12 Tenders + 16 Wings</span><span class="mrow__p">32 €</span></div>
+        <p class="cat__note">Même prix pour les Wings et les Tenders. Les formules mixtes suivent, à quelques euros près.</p>
       </article>
 
       <article class="cat reveal-up" data-cat="tasty">
@@ -310,7 +304,7 @@
       </div>
       <div class="rating__meta">
         <span class="rating__badge">Note Google vérifiée · Montréal-la-Cluse</span>
-        <a class="btn btn--ghost btn--sm" href="https://www.google.com/maps?q=Restaurant+O'Bresse,2+Av.+de+Bresse,01460+Montr%C3%A9al-la-Cluse" target="_blank" rel="noopener" data-cursor="Google">Voir sur Google</a>
+        <a class="btn btn--ghost btn--sm" href="https://share.google/rvYl9iT7WRFEWdatb" target="_blank" rel="noopener" data-cursor="Google">Voir sur Google</a>
       </div>
     </div>
 
@@ -403,8 +397,12 @@
           <div class="info-block reveal-up">
             <span class="info-block__k">Suivez-nous</span>
             <p class="info-block__v social">
-              <a href="https://www.instagram.com/obresse01?igsh=djhteGw5cDdmY3Jk" target="_blank" rel="noopener" data-cursor="Instagram">Instagram</a>
-              <a href="https://www.tiktok.com/@obresse2?_r=1&amp;_t=ZN-98AOft6U2Tu" target="_blank" rel="noopener" data-cursor="TikTok">TikTok</a>
+              <a class="social-ico social-ico--ig" href="https://www.instagram.com/obresse01?igsh=djhteGw5cDdmY3Jk" target="_blank" rel="noopener" aria-label="Instagram O'Bresse" data-cursor="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/><circle cx="17.4" cy="6.6" r="1.25" fill="currentColor"/></svg>
+              </a>
+              <a class="social-ico social-ico--tt" href="https://www.tiktok.com/@obresse2?_r=1&amp;_t=ZN-98AOft6U2Tu" target="_blank" rel="noopener" aria-label="TikTok O'Bresse" data-cursor="TikTok">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82c-.9-.6-1.5-1.53-1.68-2.6a4.3 4.3 0 0 1-.05-.72h-2.9v11.9a2.36 2.36 0 0 1-2.36 2.28 2.36 2.36 0 0 1-1.06-4.47 2.36 2.36 0 0 1 1.06-.25c.2 0 .4.03.6.08v-2.96a5.3 5.3 0 0 0-.6-.04 5.28 5.28 0 1 0 5.28 5.28V9.01a7.13 7.13 0 0 0 4.16 1.33V7.44a4.28 4.28 0 0 1-2.45-.77z"/></svg>
+              </a>
             </p>
           </div>
         </div>

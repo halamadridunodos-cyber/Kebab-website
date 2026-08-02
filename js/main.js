@@ -339,6 +339,18 @@
   }
 
   /* =========================================================
+     SCROLL PROGRESS BAR
+     ========================================================= */
+  function initScrollProgress() {
+    const bar = document.getElementById("scrollProgress");
+    if (!bar) return;
+    gsap.to(bar, {
+      scaleX: 1, ease: "none",
+      scrollTrigger: { start: 0, end: () => document.documentElement.scrollHeight - window.innerHeight, scrub: 0.25, invalidateOnRefresh: true },
+    });
+  }
+
+  /* =========================================================
      BOOT
      ========================================================= */
   window.addEventListener("DOMContentLoaded", () => {
@@ -347,10 +359,10 @@
     initNav();
     initReveals();
     initCounters();
-    initEmbers();
     initCarteFilter();
     initFaq();
     initGoogleRating();
+    initScrollProgress();
 
     if (prefersReduced) {
       document.body.classList.add("loaded");
