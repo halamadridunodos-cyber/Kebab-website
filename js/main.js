@@ -305,36 +305,44 @@
     const setStars = (rating) => { fillEl.style.width = Math.max(0, Math.min(100, (rating / 5) * 100)) + "%"; };
 
     const fbNote = parseFloat(noteEl.dataset.fallback || "4.8");
-    const fbCount = parseInt(countEl.dataset.fallback || "27", 10);
+    const fbCountText = countEl.dataset.fallback || "plus de 30"; // texte de repli (non chiffré tant que l'API n'est pas branchée)
 
-    function render(rating, count, animate) {
+    // Anime uniquement la note (le compteur de repli reste "plus de 30")
+    function renderNote(rating, animate) {
       setStars(rating);
       if (animate && !prefersReduced) {
-        const a = { v: 0 }, b = { v: 0 };
+        const a = { v: 0 };
         gsap.to(a, { v: rating, duration: 1.4, ease: "power2.out", onUpdate: () => (noteEl.textContent = fr(a.v.toFixed(1))) });
-        gsap.to(b, { v: count, duration: 1.6, ease: "power2.out", onUpdate: () => (countEl.textContent = Math.round(b.v)) });
       } else {
         noteEl.textContent = fr(rating.toFixed(1));
+      }
+    }
+    // Affiche le VRAI nombre d'avis (une fois l'API Google branchée), avec compte à rebours
+    function renderCount(count, animate) {
+      if (animate && !prefersReduced) {
+        const b = { v: 0 };
+        gsap.to(b, { v: count, duration: 1.6, ease: "power2.out", onUpdate: () => (countEl.textContent = Math.round(b.v)) });
+      } else {
         countEl.textContent = count;
       }
     }
 
     setStars(fbNote);
-    // Anime les valeurs de repli quand le bandeau entre dans le viewport
-    ScrollTrigger.create({ trigger: ".rating", start: "top 88%", once: true, onEnter: () => render(fbNote, fbCount, true) });
+    countEl.textContent = fbCountText;
+    // Anime la note de repli quand le bandeau entre dans le viewport
+    ScrollTrigger.create({ trigger: ".rating", start: "top 88%", once: true, onEnter: () => renderNote(fbNote, true) });
 
-    // Tentative de mise à jour en direct (Places API New)
+    // Tentative de mise à jour en direct (Places API New) → vrai nombre d'avis Google
     if (CONFIG.placeId && CONFIG.apiKey) {
       fetch(`https://places.googleapis.com/v1/places/${CONFIG.placeId}`, {
         headers: { "X-Goog-Api-Key": CONFIG.apiKey, "X-Goog-FieldMask": "rating,userRatingCount" },
       })
         .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
         .then((d) => {
-          if (typeof d.rating === "number" && typeof d.userRatingCount === "number") {
-            render(d.rating, d.userRatingCount, true);
-          }
+          if (typeof d.rating === "number") renderNote(d.rating, true);
+          if (typeof d.userRatingCount === "number") renderCount(d.userRatingCount, true);
         })
-        .catch(() => { /* conserve le repli 4,8 / 27 */ });
+        .catch(() => { /* conserve le repli : 4,8 · plus de 30 */ });
     }
   }
 
